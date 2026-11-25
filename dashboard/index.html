@@ -429,33 +429,55 @@
       display: flex;
       flex-wrap: wrap;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
       margin-bottom: 14px;
     }
 
     .preset-label {
-      font-size: 0.725rem;
+      font-size: 0.7rem;
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.05em;
       color: var(--fg-subtle);
-      margin-right: 4px;
+      margin-right: 2px;
+      display: inline-flex;
+      align-items: center;
     }
 
     .preset-chip {
-      font-size: 0.725rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      font-size: 0.75rem;
       font-weight: 500;
-      padding: 3px 9px;
+      line-height: 1;
+      padding: 5px 10px;
+      min-height: 28px;
       border-radius: 999px;
       background: rgba(31, 41, 55, 0.6);
       border: 1px solid var(--border);
-      color: var(--fg-muted);
+      color: var(--fg-soft);
       cursor: pointer;
       transition: all 120ms ease;
+      vertical-align: middle;
+      white-space: nowrap;
+    }
+
+    .preset-chip svg {
+      display: block;
+      flex-shrink: 0;
+      width: 12px;
+      height: 12px;
+    }
+
+    .preset-chip span {
+      display: inline-block;
+      line-height: 1;
     }
 
     .preset-chip:hover {
-      background: rgba(55, 65, 81, 0.8);
+      background: rgba(55, 65, 81, 0.85);
       border-color: var(--border-hover);
       color: var(--fg);
       transform: translateY(-1px);
@@ -493,102 +515,34 @@
       outline: none;
     }
 
-    /* Combobox Component */
-    .combobox-wrap {
-      position: relative;
-      width: 100%;
-    }
-
-    .combobox-input {
-      width: 100%;
-      padding-right: 36px;
-    }
-
-    .combobox-toggle {
-      position: absolute;
-      right: 8px;
-      top: 50%;
-      transform: translateY(-50%);
-      background: transparent;
-      border: none;
-      color: var(--fg-muted);
+    select.control {
       cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 28px;
-      height: 28px;
+      width: 100%;
+      min-height: 42px;
+      padding: 10px 38px 10px 14px;
       border-radius: var(--radius-sm);
-      transition: transform 150ms ease, color 150ms ease;
-    }
-
-    .combobox-toggle:hover {
+      border: 1px solid var(--border);
+      background-color: #0E131F;
       color: var(--fg);
+      font-family: inherit;
+      font-size: 0.875rem;
+      line-height: 1.4;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%239CA3AF' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C%2Fsvg%3E");
+      background-repeat: no-repeat;
+      background-position: calc(100% - 14px) center;
+      background-size: 14px;
     }
 
-    .combobox-wrap.open .combobox-toggle {
-      transform: translateY(-50%) rotate(180deg);
+    select.control option {
+      background-color: #111827;
+      color: #F9FAFB;
+      padding: 10px 14px;
+      font-size: 0.875rem;
     }
 
-    .combobox-menu {
-      position: absolute;
-      top: calc(100% + 4px);
-      left: 0;
-      right: 0;
-      width: 100%;
-      max-height: 250px;
-      overflow-y: auto;
-      background: #111827;
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid var(--border-hover);
-      border-radius: var(--radius-md);
-      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.65);
-      z-index: 60;
-      display: flex;
-      flex-direction: column;
-      padding: 6px;
-      animation: slide-up 120ms var(--ease-out);
-    }
-
-    .combobox-header {
-      font-size: 0.6875rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--fg-subtle);
-      padding: 6px 10px 4px;
-    }
-
-    .combobox-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 8px 12px;
-      border-radius: var(--radius-sm);
-      cursor: pointer;
-      font-size: 0.8125rem;
-      color: var(--fg-soft);
-      transition: background-color 100ms ease, color 100ms ease;
-      user-select: none;
-    }
-
-    .combobox-item:hover,
-    .combobox-item.highlighted {
-      background: rgba(255, 255, 255, 0.06);
-      color: #FFFFFF;
-    }
-
-    .combobox-item-badge {
-      font-size: 0.6875rem;
-      font-weight: 600;
-      padding: 2px 7px;
-      border-radius: 4px;
-      font-family: var(--font-mono);
-    }
-    .badge-llm { background: rgba(167, 139, 250, 0.15); color: #C084FC; border: 1px solid rgba(167, 139, 250, 0.3); }
-    .badge-regex { background: rgba(16, 185, 129, 0.15); color: #34D399; border: 1px solid rgba(16, 185, 129, 0.3); }
-    .badge-bert { background: rgba(56, 189, 248, 0.15); color: #38BDF8; border: 1px solid rgba(56, 189, 248, 0.3); }
 
 
     textarea.control {
@@ -1484,81 +1438,72 @@
           </div>
         </div>
 
-        <!-- Quick Presets -->
+        <!-- Quick Presets with Standard Developer SVG Icons -->
         <div class="preset-strip">
           <span class="preset-label">Presets:</span>
           <button type="button" class="preset-chip" data-src="BillingSystem" data-msg="User User8841 logged in.">
-            🔑 Auth Login (Regex)
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 2l-2 2m-1-1l-3 3m2 2l-3 3m-2-2l-3 3m-2-2l-3 3M7 11a5 5 0 1 1 7-7 5 5 0 0 1-7 7z"/>
+            </svg>
+            <span>Auth Login (Regex)</span>
           </button>
           <button type="button" class="preset-chip" data-src="AnalyticsEngine" data-msg="Security breach suspected from IP address 192.168.252.92">
-            🚨 Security Alert (BERT)
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              <line x1="12" y1="8" x2="12" y2="12"/>
+              <line x1="12" y1="16" x2="12.01" y2="16"/>
+            </svg>
+            <span>Security Alert (BERT)</span>
           </button>
           <button type="button" class="preset-chip" data-src="ModernHR" data-msg="Failure occurred in critical system component: component ID Component92">
-            💥 System Crash (BERT)
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="12" y1="8" x2="12" y2="12"/>
+              <line x1="12" y1="16" x2="12.01" y2="16"/>
+            </svg>
+            <span>System Crash (BERT)</span>
           </button>
           <button type="button" class="preset-chip" data-src="LegacyCRM" data-msg="Order approval workflow stalled at step 3 due to missing manager sign-off.">
-            🤖 Legacy CRM (LLM)
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#A78BFA" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="4" y="4" width="16" height="16" rx="2"/>
+              <rect x="9" y="9" width="6" height="6"/>
+              <line x1="9" y1="1" x2="9" y2="4"/>
+              <line x1="15" y1="1" x2="15" y2="4"/>
+              <line x1="9" y1="20" x2="9" y2="23"/>
+              <line x1="15" y1="20" x2="15" y2="23"/>
+              <line x1="20" y1="9" x2="23" y2="9"/>
+              <line x1="20" y1="14" x2="23" y2="14"/>
+              <line x1="1" y1="9" x2="4" y2="9"/>
+              <line x1="1" y1="14" x2="4" y2="14"/>
+            </svg>
+            <span>Legacy CRM (LLM)</span>
           </button>
         </div>
 
         <form id="singleLogForm">
           <div class="field-group">
-            <label class="field-label" for="singleSource">Application Source</label>
-            <div class="combobox-wrap" id="sourceCombobox">
-              <input
-                id="singleSource"
-                name="source"
-                class="control combobox-input"
-                autocomplete="off"
-                spellcheck="false"
-                placeholder="Select an enterprise service or type custom name…"
-                required
-              />
-              <button type="button" class="combobox-toggle" id="sourceToggleBtn" aria-label="Toggle application source options">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <polyline points="6 9 12 15 18 9"></polyline>
-                </svg>
-              </button>
-              <div class="combobox-menu" id="sourceMenu" hidden>
-                <div class="combobox-header">Enterprise Application Sources</div>
-                <div class="combobox-item" data-value="LegacyCRM">
-                  <span>LegacyCRM</span>
-                  <span class="combobox-item-badge badge-llm">Tier 3 · Groq LLM</span>
-                </div>
-                <div class="combobox-item" data-value="BillingSystem">
-                  <span>BillingSystem</span>
-                  <span class="combobox-item-badge badge-regex">Tier 1 · Regex</span>
-                </div>
-                <div class="combobox-item" data-value="AnalyticsEngine">
-                  <span>AnalyticsEngine</span>
-                  <span class="combobox-item-badge badge-bert">Tier 2 · BERT</span>
-                </div>
-                <div class="combobox-item" data-value="ModernHR">
-                  <span>ModernHR</span>
-                  <span class="combobox-item-badge badge-bert">Tier 2 · BERT</span>
-                </div>
-                <div class="combobox-item" data-value="ModernCRM">
-                  <span>ModernCRM</span>
-                  <span class="combobox-item-badge badge-regex">Tier 1 · Regex</span>
-                </div>
-                <div class="combobox-item" data-value="ThirdPartyAPI">
-                  <span>ThirdPartyAPI</span>
-                  <span class="combobox-item-badge badge-bert">Tier 2 · BERT</span>
-                </div>
-                <div class="combobox-item" data-value="Nginx">
-                  <span>Nginx</span>
-                  <span class="combobox-item-badge badge-regex">Tier 1 · Regex</span>
-                </div>
-                <div class="combobox-item" data-value="AuthService">
-                  <span>AuthService</span>
-                  <span class="combobox-item-badge badge-regex">Tier 1 · Regex</span>
-                </div>
-                <div class="combobox-item" data-value="PaymentGateway">
-                  <span>PaymentGateway</span>
-                  <span class="combobox-item-badge badge-bert">Tier 2 · BERT</span>
-                </div>
-              </div>
+            <label class="field-label" for="singleSourceSelect">Application Source</label>
+            <div style="position:relative;width:100%">
+              <select id="singleSourceSelect" class="control" name="source">
+                <option value="LegacyCRM">LegacyCRM</option>
+                <option value="BillingSystem">BillingSystem</option>
+                <option value="AnalyticsEngine">AnalyticsEngine</option>
+                <option value="ModernHR">ModernHR</option>
+                <option value="ModernCRM">ModernCRM</option>
+                <option value="ThirdPartyAPI">ThirdPartyAPI</option>
+                <option value="Nginx">Nginx</option>
+                <option value="AuthService">AuthService</option>
+                <option value="PaymentGateway">PaymentGateway</option>
+                <option value="__custom__">+ Custom Application Source...</option>
+              </select>
             </div>
+            <input
+              id="customSourceInput"
+              class="control"
+              placeholder="Type custom service name (e.g. MyService, Redis)..."
+              style="margin-top:8px"
+              hidden
+            />
           </div>
 
           <div class="field-group">
@@ -1705,25 +1650,54 @@
         </div>
       </div>
 
-      <!-- Quick Triage Tabs -->
+      <!-- Quick Triage Tabs with Standard Developer SVG Icons -->
       <div class="tab-strip" id="triageTabs" role="tablist">
         <button type="button" class="tab-btn active" data-tab="all" role="tab" aria-selected="true">
-          All Logs <span class="tab-count" id="tabCountAll">0</span>
+          <span>All Logs</span> <span class="tab-count" id="tabCountAll">0</span>
         </button>
         <button type="button" class="tab-btn" data-tab="security" role="tab" aria-selected="false">
-          🚨 Security <span class="tab-count" id="tabCountSecurity">0</span>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2" aria-hidden="true">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            <line x1="12" y1="8" x2="12" y2="12"/>
+            <line x1="12" y1="16" x2="12.01" y2="16"/>
+          </svg>
+          <span>Security</span> <span class="tab-count" id="tabCountSecurity">0</span>
         </button>
         <button type="button" class="tab-btn" data-tab="errors" role="tab" aria-selected="false">
-          ⚠️ Errors &amp; Critical <span class="tab-count" id="tabCountErrors">0</span>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2" aria-hidden="true">
+            <polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"/>
+            <line x1="12" y1="8" x2="12" y2="12"/>
+            <line x1="12" y1="16" x2="12.01" y2="16"/>
+          </svg>
+          <span>Errors &amp; Critical</span> <span class="tab-count" id="tabCountErrors">0</span>
         </button>
         <button type="button" class="tab-btn" data-tab="regex" role="tab" aria-selected="false">
-          ⚡ Regex Tier <span class="tab-count" id="tabCountRegex">0</span>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" aria-hidden="true">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+          </svg>
+          <span>Regex Tier</span> <span class="tab-count" id="tabCountRegex">0</span>
         </button>
         <button type="button" class="tab-btn" data-tab="bert" role="tab" aria-selected="false">
-          🧠 BERT Tier <span class="tab-count" id="tabCountBert">0</span>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#38BDF8" stroke-width="2" aria-hidden="true">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+          </svg>
+          <span>BERT Tier</span> <span class="tab-count" id="tabCountBert">0</span>
         </button>
         <button type="button" class="tab-btn" data-tab="llm" role="tab" aria-selected="false">
-          🤖 LLM Tier <span class="tab-count" id="tabCountLlm">0</span>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#A78BFA" stroke-width="2" aria-hidden="true">
+            <rect x="4" y="4" width="16" height="16" rx="2"/>
+            <rect x="9" y="9" width="6" height="6"/>
+            <line x1="9" y1="1" x2="9" y2="4"/>
+            <line x1="15" y1="1" x2="15" y2="4"/>
+            <line x1="9" y1="20" x2="9" y2="23"/>
+            <line x1="15" y1="20" x2="15" y2="23"/>
+            <line x1="20" y1="9" x2="23" y2="9"/>
+            <line x1="20" y1="14" x2="23" y2="14"/>
+            <line x1="1" y1="9" x2="4" y2="9"/>
+            <line x1="1" y1="14" x2="4" y2="14"/>
+          </svg>
+          <span>LLM Tier</span> <span class="tab-count" id="tabCountLlm">0</span>
         </button>
       </div>
 
@@ -1825,7 +1799,12 @@
         <h3 id="modalTitle" style="font-size:1rem;font-weight:600;display:flex;align-items:center;gap:8px">
           <span>Log Details &amp; Routing Inspector</span>
         </h3>
-        <button class="btn-icon" id="closeModalBtn" type="button" aria-label="Close dialog">✕</button>
+        <button class="btn-icon" id="closeModalBtn" type="button" aria-label="Close dialog">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
       </div>
 
       <div class="modal-body">
@@ -1962,8 +1941,15 @@
 
     function tierBadge(tier) {
       const cfg = TIER_CONFIG[tier] || TIER_CONFIG["Unknown"];
-      const icon = tier === "Regex" ? "⚡" : tier === "BERT" ? "🧠" : "🤖";
-      return `<span class="tier-badge ${cfg.cls}">${icon} ${escapeHtml(tier || "Unknown")}</span>`;
+      let iconSvg = '';
+      if (tier === "Regex") {
+        iconSvg = `<svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>`;
+      } else if (tier === "BERT") {
+        iconSvg = `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>`;
+      } else {
+        iconSvg = `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg>`;
+      }
+      return `<span class="tier-badge ${cfg.cls}">${iconSvg} <span>${escapeHtml(tier || "Unknown")}</span></span>`;
     }
 
     async function checkApiHealth() {
@@ -2079,7 +2065,12 @@
       list.innerHTML = chips.map((c, i) => `
         <span class="filter-chip">
           ${escapeHtml(c.label)}
-          <button type="button" class="filter-chip-remove" data-chip-idx="${i}" aria-label="Remove filter">✕</button>
+          <button type="button" class="filter-chip-remove" data-chip-idx="${i}" aria-label="Remove filter">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
         </span>
       `).join("");
 
@@ -2526,14 +2517,25 @@
       e.preventDefault();
       const btn = document.getElementById("singleSubmitBtn");
       const banner = document.getElementById("singleResult");
-      const source = document.getElementById("singleSource").value.trim() || "Application";
+      
+      const selectEl = document.getElementById("singleSourceSelect");
+      let source = selectEl.value;
+      if (source === "__custom__") {
+        source = document.getElementById("customSourceInput").value.trim() || "Application";
+      }
+      
       const log_message = document.getElementById("singleMessage").value.trim();
       const add_to_session = document.getElementById("addToSessionCheck").checked;
 
       if (!log_message) return;
 
       btn.disabled = true;
-      btn.innerHTML = `<span style="display:inline-block;animation:spin 1s linear infinite">⏳</span> Classifying with 3-Tier Router…`;
+      btn.innerHTML = `
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="animation:spin 1s linear infinite" aria-hidden="true">
+          <circle cx="12" cy="12" r="10" stroke-dasharray="32" stroke-dashoffset="10"/>
+        </svg>
+        <span>Classifying with 3-Tier Router…</span>
+      `;
 
       try {
         const res = await fetch("/classify-log/", {
@@ -2579,13 +2581,41 @@
       }
     });
 
-    // Preset Chips
+    // Preset Chips Selection
     document.querySelectorAll(".preset-chip").forEach(chip => {
       chip.addEventListener("click", () => {
-        document.getElementById("singleSource").value = chip.dataset.src;
+        const src = chip.dataset.src;
+        const select = document.getElementById("singleSourceSelect");
+        const customInput = document.getElementById("customSourceInput");
+
+        let found = false;
+        for (let opt of select.options) {
+          if (opt.value === src) {
+            select.value = src;
+            customInput.hidden = true;
+            found = true;
+            break;
+          }
+        }
+        if (!found) {
+          select.value = "__custom__";
+          customInput.hidden = false;
+          customInput.value = src;
+        }
+
         document.getElementById("singleMessage").value = chip.dataset.msg;
         document.getElementById("singleMessage").focus();
       });
+    });
+
+    document.getElementById("singleSourceSelect").addEventListener("change", e => {
+      const customInput = document.getElementById("customSourceInput");
+      if (e.target.value === "__custom__") {
+        customInput.hidden = false;
+        customInput.focus();
+      } else {
+        customInput.hidden = true;
+      }
     });
 
     // File Upload & Dropzone
@@ -2596,7 +2626,15 @@
     function handleFile(file) {
       if (!file) return;
       state.selectedFile = file;
-      document.getElementById("dropzoneTitle").innerHTML = `<span class="dropzone-file-selected">📄 ${escapeHtml(file.name)}</span>`;
+      document.getElementById("dropzoneTitle").innerHTML = `
+        <span class="dropzone-file-selected">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+          </svg>
+          ${escapeHtml(file.name)}
+        </span>
+      `;
       document.getElementById("dropzoneSub").textContent = `${(file.size / 1024).toFixed(1)} KB ready for hybrid classification`;
       uploadBtn.disabled = false;
     }
@@ -2615,7 +2653,12 @@
       const statusBox = document.getElementById("uploadStatus");
       const defaultSource = document.getElementById("defaultUploadSource").value.trim() || "ProductionServer";
       uploadBtn.disabled = true;
-      uploadBtn.innerHTML = `⏳ Batch Classifying File…`;
+      uploadBtn.innerHTML = `
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="animation:spin 1s linear infinite" aria-hidden="true">
+          <circle cx="12" cy="12" r="10" stroke-dasharray="32" stroke-dashoffset="10"/>
+        </svg>
+        <span>Batch Classifying File…</span>
+      `;
 
       try {
         const form = new FormData();
@@ -2627,7 +2670,14 @@
 
         setLogs(data.logs || []);
         statusBox.hidden = false;
-        statusBox.innerHTML = `<span style="color:#6EE7B7">✓ Successfully classified ${data.logs.length} logs from ${escapeHtml(state.selectedFile.name)}</span>`;
+        statusBox.innerHTML = `
+          <span style="display:inline-flex;align-items:center;gap:6px;color:#6EE7B7">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            Classified ${data.logs.length} logs from ${escapeHtml(state.selectedFile.name)}
+          </span>
+        `;
         showToast(`Classified ${data.logs.length} logs from file!`);
       } catch (err) {
         statusBox.hidden = false;
@@ -2724,63 +2774,6 @@
       a.click();
       URL.revokeObjectURL(url);
       showToast("Downloaded classified_logs.csv");
-    });
-
-    // Combobox Dropdown Logic (Pixel-Perfect Alignment & Selection)
-    const sourceWrap = document.getElementById("sourceCombobox");
-    const sourceInput = document.getElementById("singleSource");
-    const sourceToggle = document.getElementById("sourceToggleBtn");
-    const sourceMenu = document.getElementById("sourceMenu");
-
-    function openSourceMenu() {
-      sourceWrap.classList.add("open");
-      sourceMenu.hidden = false;
-    }
-
-    function closeSourceMenu() {
-      sourceWrap.classList.remove("open");
-      sourceMenu.hidden = true;
-    }
-
-    sourceToggle.addEventListener("click", e => {
-      e.stopPropagation();
-      if (sourceWrap.classList.contains("open")) {
-        closeSourceMenu();
-      } else {
-        openSourceMenu();
-        sourceInput.focus();
-      }
-    });
-
-    sourceInput.addEventListener("focus", openSourceMenu);
-    sourceInput.addEventListener("click", openSourceMenu);
-
-    sourceInput.addEventListener("input", () => {
-      const q = sourceInput.value.trim().toLowerCase();
-      openSourceMenu();
-      sourceMenu.querySelectorAll(".combobox-item").forEach(item => {
-        const val = (item.dataset.value || "").toLowerCase();
-        item.style.display = (!q || val.includes(q)) ? "flex" : "none";
-      });
-    });
-
-    sourceMenu.querySelectorAll(".combobox-item").forEach(item => {
-      item.addEventListener("click", e => {
-        e.stopPropagation();
-        sourceInput.value = item.dataset.value;
-        closeSourceMenu();
-        sourceInput.focus();
-      });
-    });
-
-    document.addEventListener("click", e => {
-      if (!sourceWrap.contains(e.target)) {
-        closeSourceMenu();
-      }
-    });
-
-    document.addEventListener("keydown", e => {
-      if (e.key === "Escape") closeSourceMenu();
     });
 
     // Init
