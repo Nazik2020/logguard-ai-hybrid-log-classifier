@@ -1,0 +1,26 @@
+timestamp,source,log_message
+2025-11-25 08:00:12,ModernCRM,"nova.osapi_compute.wsgi.server [req-b9718cd8-f65e-49cc-8349-6cf7122af137] 10.11.10.1 ""GET /v2/servers/detail HTTP/1.1"" status: 200 len: 1893 time: 0.2675"
+2025-11-25 08:04:19,BillingSystem,User User12345 logged in.
+2025-11-25 08:08:44,AnalyticsEngine,File data_6957.csv uploaded successfully by user User265.
+2025-11-25 08:12:02,AnalyticsEngine,Backup completed successfully.
+2025-11-25 08:16:30,ModernHR,Multiple bad login attempts detected on user 8538 account
+2025-11-25 08:20:18,ThirdPartyAPI,"nova.compute.claims [req-a07ac654-8e81-416d-bfbb] Total memory: 64172 MB, used: 512.00 MB"
+2025-11-25 08:24:05,ModernCRM,Email service experiencing issues with sending
+2025-11-25 08:28:41,ModernHR,Shard 6 replication task ended in failure
+2025-11-25 08:32:15,BillingSystem,Disk cleanup completed successfully.
+2025-11-25 08:36:50,ModernHR,Critical system unit error: unit ID Component55
+2025-11-25 08:41:10,ThirdPartyAPI,"nova.osapi_compute.wsgi.server [req-033d97b9-69e4-4acd-9029-f0d7b9370645] 10.11.10.1 ""POST /v2/os-server-external-events HTTP/1.1"" status: 404 len: 296 time: 0.0847"
+2025-11-25 08:45:33,AnalyticsEngine,Alert: brute force login attempt from 192.168.80.114 detected
+2025-11-25 08:49:12,ModernCRM,Backup started at 2025-11-25 08:49:10.
+2025-11-25 08:53:40,ModernHR,Account with ID 5351 created by User634.
+2025-11-25 08:57:05,ThirdPartyAPI,System updated to version 3.9.1.
+2025-11-25 09:02:18,BillingSystem,System reboot initiated by user User243.
+2025-11-25 09:06:51,ModernCRM,Boot process terminated unexpectedly due to kernel issue
+2025-11-25 09:11:27,AnalyticsEngine,Unauthorized access to data was attempted
+2025-11-25 09:15:44,BillingSystem,"nova.compute.claims [req-9118475d-6e72-48fa-9dee-e6b7d957dcd6] Total vcpu: 16 VCPU, used: 4.00 VCPU"
+2025-11-25 09:20:09,ThirdPartyAPI,User 7662 tried to bypass API security measures
+2025-11-25 09:24:36,ModernHR,User User494 logged out.
+2025-11-25 09:29:14,ModernCRM,"nova.metadata.wsgi.server [-] 10.11.21.138,10.11.10.1 ""GET /openstack/2013-10-17 HTTP/1.1"" RCODE 200 len: 157 time: 0.0011"
+2025-11-25 09:34:00,LegacyCRM,Case escalation for ticket ID 7324 failed because the assigned support agent is no longer active.
+2025-11-25 09:38:22,LegacyCRM,The 'ReportGenerator' feature is no longer supported. Use 'ExportToCSV' instead.
+2025-11-25 09:42:10,ThirdPartyAPI,Vendor webhook ping received with opaque token payload
