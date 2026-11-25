@@ -493,6 +493,104 @@
       outline: none;
     }
 
+    /* Combobox Component */
+    .combobox-wrap {
+      position: relative;
+      width: 100%;
+    }
+
+    .combobox-input {
+      width: 100%;
+      padding-right: 36px;
+    }
+
+    .combobox-toggle {
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: transparent;
+      border: none;
+      color: var(--fg-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border-radius: var(--radius-sm);
+      transition: transform 150ms ease, color 150ms ease;
+    }
+
+    .combobox-toggle:hover {
+      color: var(--fg);
+    }
+
+    .combobox-wrap.open .combobox-toggle {
+      transform: translateY(-50%) rotate(180deg);
+    }
+
+    .combobox-menu {
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 0;
+      right: 0;
+      width: 100%;
+      max-height: 250px;
+      overflow-y: auto;
+      background: #111827;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--border-hover);
+      border-radius: var(--radius-md);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.65);
+      z-index: 60;
+      display: flex;
+      flex-direction: column;
+      padding: 6px;
+      animation: slide-up 120ms var(--ease-out);
+    }
+
+    .combobox-header {
+      font-size: 0.6875rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--fg-subtle);
+      padding: 6px 10px 4px;
+    }
+
+    .combobox-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 12px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      font-size: 0.8125rem;
+      color: var(--fg-soft);
+      transition: background-color 100ms ease, color 100ms ease;
+      user-select: none;
+    }
+
+    .combobox-item:hover,
+    .combobox-item.highlighted {
+      background: rgba(255, 255, 255, 0.06);
+      color: #FFFFFF;
+    }
+
+    .combobox-item-badge {
+      font-size: 0.6875rem;
+      font-weight: 600;
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-family: var(--font-mono);
+    }
+    .badge-llm { background: rgba(167, 139, 250, 0.15); color: #C084FC; border: 1px solid rgba(167, 139, 250, 0.3); }
+    .badge-regex { background: rgba(16, 185, 129, 0.15); color: #34D399; border: 1px solid rgba(16, 185, 129, 0.3); }
+    .badge-bert { background: rgba(56, 189, 248, 0.15); color: #38BDF8; border: 1px solid rgba(56, 189, 248, 0.3); }
+
+
     textarea.control {
       min-height: 96px;
       resize: vertical;
@@ -1406,26 +1504,61 @@
         <form id="singleLogForm">
           <div class="field-group">
             <label class="field-label" for="singleSource">Application Source</label>
-            <input
-              id="singleSource"
-              name="source"
-              list="sourceSuggestions"
-              class="control"
-              autocomplete="off"
-              spellcheck="false"
-              placeholder="e.g. Nginx, BillingSystem, ModernHR, LegacyCRM…"
-              required
-            />
-            <datalist id="sourceSuggestions">
-              <option value="ModernCRM"></option>
-              <option value="BillingSystem"></option>
-              <option value="AnalyticsEngine"></option>
-              <option value="ModernHR"></option>
-              <option value="ThirdPartyAPI"></option>
-              <option value="LegacyCRM"></option>
-              <option value="AuthService"></option>
-              <option value="Nginx"></option>
-            </datalist>
+            <div class="combobox-wrap" id="sourceCombobox">
+              <input
+                id="singleSource"
+                name="source"
+                class="control combobox-input"
+                autocomplete="off"
+                spellcheck="false"
+                placeholder="Select an enterprise service or type custom name…"
+                required
+              />
+              <button type="button" class="combobox-toggle" id="sourceToggleBtn" aria-label="Toggle application source options">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </button>
+              <div class="combobox-menu" id="sourceMenu" hidden>
+                <div class="combobox-header">Enterprise Application Sources</div>
+                <div class="combobox-item" data-value="LegacyCRM">
+                  <span>LegacyCRM</span>
+                  <span class="combobox-item-badge badge-llm">Tier 3 · Groq LLM</span>
+                </div>
+                <div class="combobox-item" data-value="BillingSystem">
+                  <span>BillingSystem</span>
+                  <span class="combobox-item-badge badge-regex">Tier 1 · Regex</span>
+                </div>
+                <div class="combobox-item" data-value="AnalyticsEngine">
+                  <span>AnalyticsEngine</span>
+                  <span class="combobox-item-badge badge-bert">Tier 2 · BERT</span>
+                </div>
+                <div class="combobox-item" data-value="ModernHR">
+                  <span>ModernHR</span>
+                  <span class="combobox-item-badge badge-bert">Tier 2 · BERT</span>
+                </div>
+                <div class="combobox-item" data-value="ModernCRM">
+                  <span>ModernCRM</span>
+                  <span class="combobox-item-badge badge-regex">Tier 1 · Regex</span>
+                </div>
+                <div class="combobox-item" data-value="ThirdPartyAPI">
+                  <span>ThirdPartyAPI</span>
+                  <span class="combobox-item-badge badge-bert">Tier 2 · BERT</span>
+                </div>
+                <div class="combobox-item" data-value="Nginx">
+                  <span>Nginx</span>
+                  <span class="combobox-item-badge badge-regex">Tier 1 · Regex</span>
+                </div>
+                <div class="combobox-item" data-value="AuthService">
+                  <span>AuthService</span>
+                  <span class="combobox-item-badge badge-regex">Tier 1 · Regex</span>
+                </div>
+                <div class="combobox-item" data-value="PaymentGateway">
+                  <span>PaymentGateway</span>
+                  <span class="combobox-item-badge badge-bert">Tier 2 · BERT</span>
+                </div>
+              </div>
+            </div>
           </div>
 
           <div class="field-group">
@@ -2591,6 +2724,63 @@
       a.click();
       URL.revokeObjectURL(url);
       showToast("Downloaded classified_logs.csv");
+    });
+
+    // Combobox Dropdown Logic (Pixel-Perfect Alignment & Selection)
+    const sourceWrap = document.getElementById("sourceCombobox");
+    const sourceInput = document.getElementById("singleSource");
+    const sourceToggle = document.getElementById("sourceToggleBtn");
+    const sourceMenu = document.getElementById("sourceMenu");
+
+    function openSourceMenu() {
+      sourceWrap.classList.add("open");
+      sourceMenu.hidden = false;
+    }
+
+    function closeSourceMenu() {
+      sourceWrap.classList.remove("open");
+      sourceMenu.hidden = true;
+    }
+
+    sourceToggle.addEventListener("click", e => {
+      e.stopPropagation();
+      if (sourceWrap.classList.contains("open")) {
+        closeSourceMenu();
+      } else {
+        openSourceMenu();
+        sourceInput.focus();
+      }
+    });
+
+    sourceInput.addEventListener("focus", openSourceMenu);
+    sourceInput.addEventListener("click", openSourceMenu);
+
+    sourceInput.addEventListener("input", () => {
+      const q = sourceInput.value.trim().toLowerCase();
+      openSourceMenu();
+      sourceMenu.querySelectorAll(".combobox-item").forEach(item => {
+        const val = (item.dataset.value || "").toLowerCase();
+        item.style.display = (!q || val.includes(q)) ? "flex" : "none";
+      });
+    });
+
+    sourceMenu.querySelectorAll(".combobox-item").forEach(item => {
+      item.addEventListener("click", e => {
+        e.stopPropagation();
+        sourceInput.value = item.dataset.value;
+        closeSourceMenu();
+        sourceInput.focus();
+      });
+    });
+
+    document.addEventListener("click", e => {
+      if (!sourceWrap.contains(e.target)) {
+        closeSourceMenu();
+      }
+    });
+
+    document.addEventListener("keydown", e => {
+      if (e.key === "Escape") closeSourceMenu();
     });
 
     // Init
