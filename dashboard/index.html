@@ -2,43 +2,55 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#0F172A" />
-  <title>LogGuard AI — Hybrid Log Classification &amp; Analytics</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0B0F19" />
+  <title>LogGuard AI — Hybrid Log Classification &amp; Operational Analytics</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Fira+Sans:wght@400;500;600;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap"
     rel="stylesheet"
   />
   <style>
     :root {
       color-scheme: dark;
-      --bg: #0F172A;
-      --bg-elevated: #1E293B;
-      --card: rgba(27, 35, 54, 0.88);
-      --muted: #272F42;
-      --fg: #F8FAFC;
-      --fg-muted: #94A3B8;
-      --fg-soft: #CBD5E1;
-      --border: rgba(148, 163, 184, 0.22);
-      --border-strong: rgba(148, 163, 184, 0.38);
-      --accent: #22C55E;
-      --accent-fg: #052E16;
+      --bg: #0B0F19;
+      --bg-surface: #111827;
+      --bg-elevated: #1F2937;
+      --bg-card: rgba(17, 24, 39, 0.85);
+      --bg-card-hover: rgba(31, 41, 55, 0.65);
+      --border: rgba(255, 255, 255, 0.08);
+      --border-hover: rgba(255, 255, 255, 0.16);
+      --border-accent: rgba(34, 197, 94, 0.4);
+      --fg: #F9FAFB;
+      --fg-soft: #E5E7EB;
+      --fg-muted: #9CA3AF;
+      --fg-subtle: #6B7280;
+      
+      --accent: #10B981;
+      --accent-glow: rgba(16, 185, 129, 0.25);
+      --accent-fg: #022C22;
       --info: #38BDF8;
+      --info-glow: rgba(56, 189, 248, 0.22);
       --warning: #F59E0B;
       --danger: #EF4444;
+      --danger-glow: rgba(239, 68, 68, 0.22);
       --purple: #A78BFA;
-      --radius-lg: 14px;
+      
+      --radius-sm: 6px;
       --radius-md: 10px;
-      --radius-sm: 8px;
-      --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
-      --font-sans: "Fira Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --radius-lg: 14px;
+      --radius-xl: 18px;
+      
+      --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       --font-mono: "Fira Code", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     *, *::before, *::after {
       box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
     html {
@@ -46,30 +58,28 @@
       background-color: var(--bg);
       color: var(--fg);
       -webkit-text-size-adjust: 100%;
-    }
-
-    @media (pointer: fine) {
-      html {
-        overscroll-behavior: none;
-      }
+      scroll-behavior: smooth;
     }
 
     body {
-      margin: 0;
       min-height: 100vh;
       background:
-        radial-gradient(920px 440px at 8% -5%, rgba(34, 197, 94, 0.09), transparent 60%),
-        radial-gradient(840px 440px at 92% 0%, rgba(56, 189, 248, 0.09), transparent 60%),
+        radial-gradient(1000px 500px at 5% -10%, rgba(16, 185, 129, 0.08), transparent 60%),
+        radial-gradient(900px 500px at 95% -10%, rgba(56, 189, 248, 0.08), transparent 60%),
+        radial-gradient(1200px 600px at 50% 110%, rgba(167, 139, 250, 0.05), transparent 70%),
         var(--bg);
       color: var(--fg);
       line-height: 1.5;
       overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
     }
 
     [hidden] {
       display: none !important;
     }
 
+    /* Accessibility */
     .skip-link {
       position: absolute;
       left: -9999px;
@@ -83,8 +93,8 @@
       text-decoration: none;
     }
     .skip-link:focus {
-      left: 12px;
-      top: 12px;
+      left: 16px;
+      top: 16px;
     }
 
     :focus-visible {
@@ -92,21 +102,21 @@
       outline-offset: 2px;
     }
 
-    /* Header */
+    /* Top Bar */
     .topbar {
       position: sticky;
       top: 0;
-      z-index: 40;
+      z-index: 50;
+      background: rgba(11, 15, 25, 0.82);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
-      background: rgba(15, 23, 42, 0.86);
       border-bottom: 1px solid var(--border);
     }
 
     .topbar-inner {
-      max-width: 1360px;
+      max-width: 1400px;
       margin: 0 auto;
-      padding: 12px 16px;
+      padding: 12px 20px;
       display: flex;
       flex-wrap: wrap;
       align-items: center;
@@ -118,49 +128,46 @@
       display: flex;
       align-items: center;
       gap: 12px;
-      min-width: 0;
     }
 
-    .brand-mark {
+    .brand-icon {
       width: 40px;
       height: 40px;
-      flex-shrink: 0;
-      border-radius: 10px;
-      background: linear-gradient(135deg, rgba(34, 197, 94, 0.22), rgba(56, 189, 248, 0.22));
-      border: 1px solid rgba(34, 197, 94, 0.42);
-      display: grid;
-      place-items: center;
+      border-radius: var(--radius-md);
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(56, 189, 248, 0.2));
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
       color: var(--accent);
+      box-shadow: 0 0 16px var(--accent-glow);
     }
 
     .brand-title {
-      margin: 0;
-      font-size: 1.08rem;
+      font-size: 1.125rem;
       font-weight: 700;
-      letter-spacing: -0.01em;
+      letter-spacing: -0.02em;
       display: flex;
       align-items: center;
       gap: 8px;
-      flex-wrap: wrap;
     }
 
-    .arch-tag {
-      font-size: 0.7rem;
+    .brand-badge {
+      font-size: 0.6875rem;
       font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
       padding: 2px 8px;
       border-radius: 999px;
-      background: rgba(56, 189, 248, 0.14);
-      border: 1px solid rgba(56, 189, 248, 0.35);
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.3);
       color: #7DD3FC;
     }
 
     .brand-sub {
-      margin: 1px 0 0;
-      font-size: 0.78rem;
+      font-size: 0.775rem;
       color: var(--fg-muted);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      margin-top: 1px;
     }
 
     .topbar-actions {
@@ -170,33 +177,45 @@
       gap: 8px;
     }
 
+    /* Status Pill */
     .status-pill {
       display: inline-flex;
       align-items: center;
-      gap: 7px;
-      min-height: 38px;
+      gap: 8px;
       padding: 6px 12px;
       border-radius: 999px;
-      font-size: 0.8rem;
-      font-weight: 500;
-      background: var(--muted);
+      background: rgba(31, 41, 55, 0.7);
       border: 1px solid var(--border);
+      font-size: 0.8125rem;
+      font-weight: 500;
       color: var(--fg-soft);
     }
 
-    .status-dot {
+    .radar-dot {
+      position: relative;
       width: 8px;
       height: 8px;
       border-radius: 50%;
-      background: var(--fg-muted);
-      flex-shrink: 0;
+      background: var(--fg-subtle);
     }
-    .status-dot.online {
+
+    .radar-dot.online {
       background: var(--accent);
-      box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.22);
+      box-shadow: 0 0 8px var(--accent);
     }
-    .status-dot.offline {
-      background: var(--danger);
+
+    .radar-dot.online::after {
+      content: "";
+      position: absolute;
+      inset: -3px;
+      border-radius: 50%;
+      border: 1.5px solid var(--accent);
+      animation: pulse-ring 2s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
+    }
+
+    @keyframes pulse-ring {
+      0% { transform: scale(0.6); opacity: 0.9; }
+      100% { transform: scale(2.2); opacity: 0; }
     }
 
     /* Buttons */
@@ -204,29 +223,34 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
-      min-height: 44px;
-      padding: 0 16px;
+      gap: 7px;
+      min-height: 38px;
+      padding: 0 14px;
       border-radius: var(--radius-sm);
       border: 1px solid var(--border);
-      background: var(--muted);
-      color: var(--fg);
+      background: rgba(31, 41, 55, 0.75);
+      color: var(--fg-soft);
       font-family: inherit;
-      font-size: 0.875rem;
+      font-size: 0.8125rem;
       font-weight: 600;
       cursor: pointer;
       text-decoration: none;
       touch-action: manipulation;
-      -webkit-tap-highlight-color: transparent;
-      transition: transform 160ms var(--ease-out), background-color 150ms ease, border-color 150ms ease;
+      transition: transform 120ms var(--ease-out), background-color 150ms ease, border-color 150ms ease, color 150ms ease;
     }
 
-    .btn:active {
+    .btn:active:not(:disabled) {
       transform: scale(0.97);
     }
 
+    .btn:hover:not(:disabled) {
+      background: rgba(55, 65, 81, 0.9);
+      border-color: var(--border-hover);
+      color: var(--fg);
+    }
+
     .btn:disabled {
-      opacity: 0.6;
+      opacity: 0.5;
       cursor: not-allowed;
       transform: none;
     }
@@ -235,80 +259,71 @@
       background: var(--accent);
       color: var(--accent-fg);
       border-color: transparent;
+      box-shadow: 0 2px 10px var(--accent-glow);
     }
 
-    .btn-primary:disabled {
-      background: #1E293B;
-      color: #64748B;
-      border-color: rgba(148, 163, 184, 0.2);
-      opacity: 1;
+    .btn-primary:hover:not(:disabled) {
+      background: #059669;
+      color: #FFFFFF;
+      border-color: transparent;
     }
 
-    .btn-ghost {
+    .btn-demo {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.18), rgba(56, 189, 248, 0.18));
+      color: #34D399;
+      border-color: rgba(16, 185, 129, 0.35);
+    }
+
+    .btn-demo:hover:not(:disabled) {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.28), rgba(56, 189, 248, 0.28));
+      border-color: rgba(16, 185, 129, 0.55);
+      color: #6EE7B7;
+    }
+
+    .btn-danger-ghost {
       background: transparent;
-      color: var(--fg-soft);
+      color: #F87171;
+      border-color: transparent;
+    }
+    .btn-danger-ghost:hover:not(:disabled) {
+      background: rgba(239, 68, 68, 0.12);
+      border-color: rgba(239, 68, 68, 0.3);
+      color: #FCA5A5;
     }
 
-    .btn-sm {
-      min-height: 38px;
-      padding: 0 12px;
-      font-size: 0.8125rem;
-    }
-
-    @media (hover: hover) and (pointer: fine) {
-      .btn:hover:not(:disabled) {
-        background: #334155;
-        border-color: var(--border-strong);
-      }
-      .btn-primary:hover:not(:disabled) {
-        background: #16A34A;
-        border-color: transparent;
-      }
-      .btn-ghost:hover:not(:disabled) {
-        background: rgba(148, 163, 184, 0.12);
-      }
-    }
-
-    /* Container */
+    /* Main Container */
     .container {
-      max-width: 1360px;
+      max-width: 1400px;
       margin: 0 auto;
-      padding: 16px;
+      padding: 20px;
+      width: 100%;
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 20px;
+      flex: 1;
     }
 
-    @media (min-width: 768px) {
-      .topbar-inner,
+    @media (min-width: 1024px) {
       .container {
-        padding-left: 24px;
-        padding-right: 24px;
-      }
-      .container {
-        padding-top: 20px;
-        padding-bottom: 36px;
-        gap: 20px;
+        padding: 28px 24px;
+        gap: 24px;
       }
     }
 
     /* Glass Cards */
     .card {
-      background: var(--card);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      background: var(--bg-card);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
       border: 1px solid var(--border);
       border-radius: var(--radius-lg);
-      padding: 16px;
-      min-width: 0;
-      display: flex;
-      flex-direction: column;
+      padding: 18px 20px;
+      position: relative;
+      transition: border-color 150ms ease, box-shadow 150ms ease;
     }
 
-    @media (min-width: 768px) {
-      .card {
-        padding: 20px;
-      }
+    .card:hover {
+      border-color: var(--border-hover);
     }
 
     .card-header {
@@ -317,37 +332,42 @@
       align-items: center;
       justify-content: space-between;
       gap: 8px;
-      margin-bottom: 14px;
+      margin-bottom: 16px;
     }
 
     .card-title {
-      margin: 0;
-      font-size: 1rem;
+      font-size: 0.9375rem;
       font-weight: 600;
-      display: inline-flex;
+      letter-spacing: -0.01em;
+      display: flex;
       align-items: center;
       gap: 8px;
-      text-wrap: balance;
     }
 
     .card-subtitle {
-      margin: 2px 0 0;
-      font-size: 0.8125rem;
+      font-size: 0.775rem;
       color: var(--fg-muted);
+      margin-top: 2px;
     }
 
-    /* Grid Layouts */
+    /* Grids */
     .grid-2 {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 16px;
-      align-items: stretch;
+      gap: 20px;
     }
 
+    @media (min-width: 960px) {
+      .grid-2 {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    /* KPI Row */
     .kpi-grid {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 12px;
+      gap: 14px;
     }
 
     @media (min-width: 480px) {
@@ -361,52 +381,86 @@
         grid-template-columns: repeat(4, 1fr);
         gap: 16px;
       }
-      .grid-2 {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 20px;
-      }
     }
 
-    /* KPI Card */
     .kpi-card {
-      gap: 6px;
-      padding: 16px;
-      position: relative;
       overflow: hidden;
+      padding: 18px 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 10px;
     }
 
     .kpi-card::before {
       content: "";
       position: absolute;
-      inset: 0 0 auto 0;
-      height: 2px;
-      background: var(--kpi-accent, rgba(148, 163, 184, 0.25));
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2.5px;
+      background: var(--kpi-glow, var(--border));
     }
 
     .kpi-top {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 8px;
-      color: var(--fg-muted);
       font-size: 0.8125rem;
       font-weight: 500;
+      color: var(--fg-muted);
     }
 
     .kpi-value {
-      font-size: 1.85rem;
+      font-size: 2rem;
       font-weight: 700;
-      letter-spacing: -0.02em;
+      letter-spacing: -0.03em;
       font-variant-numeric: tabular-nums;
-      line-height: 1.15;
+      line-height: 1.1;
     }
 
     .kpi-foot {
-      font-size: 0.78rem;
-      color: var(--fg-muted);
+      font-size: 0.75rem;
+      color: var(--fg-subtle);
     }
 
-    /* Forms & Inputs */
+    /* Single Classifier Form & Preset Chips */
+    .preset-strip {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 14px;
+    }
+
+    .preset-label {
+      font-size: 0.725rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--fg-subtle);
+      margin-right: 4px;
+    }
+
+    .preset-chip {
+      font-size: 0.725rem;
+      font-weight: 500;
+      padding: 3px 9px;
+      border-radius: 999px;
+      background: rgba(31, 41, 55, 0.6);
+      border: 1px solid var(--border);
+      color: var(--fg-muted);
+      cursor: pointer;
+      transition: all 120ms ease;
+    }
+
+    .preset-chip:hover {
+      background: rgba(55, 65, 81, 0.8);
+      border-color: var(--border-hover);
+      color: var(--fg);
+      transform: translateY(-1px);
+    }
+
     .field-group {
       display: flex;
       flex-direction: column;
@@ -414,7 +468,7 @@
       margin-bottom: 12px;
     }
 
-    label.field-label {
+    .field-label {
       font-size: 0.8125rem;
       font-weight: 600;
       color: var(--fg-soft);
@@ -422,74 +476,86 @@
 
     .control {
       width: 100%;
-      min-height: 44px;
-      padding: 10px 12px;
+      min-height: 42px;
+      padding: 10px 14px;
       border-radius: var(--radius-sm);
       border: 1px solid var(--border);
-      background-color: #0F172A;
+      background-color: #0E131F;
       color: var(--fg);
       font-family: inherit;
-      font-size: 0.9rem;
-      transition: border-color 150ms ease;
+      font-size: 0.875rem;
+      transition: border-color 150ms ease, box-shadow 150ms ease;
+    }
+
+    .control:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+      outline: none;
     }
 
     textarea.control {
-      min-height: 92px;
+      min-height: 96px;
       resize: vertical;
       font-family: var(--font-mono);
-      font-size: 0.84rem;
-      line-height: 1.45;
-    }
-
-    select.control {
-      cursor: pointer;
-    }
-
-    .control::placeholder {
-      color: var(--fg-muted);
+      font-size: 0.8125rem;
+      line-height: 1.5;
     }
 
     .checkbox-row {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      font-size: 0.82rem;
-      color: var(--fg-soft);
-      margin-bottom: 12px;
+      font-size: 0.8125rem;
+      color: var(--fg-muted);
+      margin-bottom: 14px;
       cursor: pointer;
-      min-height: 36px;
+      user-select: none;
     }
+
     .checkbox-row input {
-      width: 18px;
-      height: 18px;
+      width: 16px;
+      height: 16px;
       accent-color: var(--accent);
       cursor: pointer;
     }
 
-    /* Result Box */
+    /* Result Banner */
     .result-banner {
-      margin-top: 12px;
-      padding: 12px 14px;
+      margin-top: 14px;
+      padding: 14px 16px;
       border-radius: var(--radius-md);
-      background: rgba(15, 23, 42, 0.78);
+      background: rgba(14, 19, 31, 0.95);
       border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      animation: slide-up 180ms var(--ease-out);
+    }
+
+    @keyframes slide-up {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .result-banner-top {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
-      gap: 10px;
-      font-size: 0.875rem;
+      gap: 8px;
+    }
+
+    .result-meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      font-size: 0.75rem;
+      color: var(--fg-muted);
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      padding-top: 8px;
     }
 
     /* Dropzone */
-    .upload-body {
-      display: flex;
-      flex-direction: column;
-      flex: 1;
-      justify-content: space-between;
-      gap: 12px;
-    }
-
     .dropzone {
       position: relative;
       display: flex;
@@ -498,25 +564,20 @@
       justify-content: center;
       text-align: center;
       gap: 8px;
-      flex: 1;
-      min-height: 165px;
-      padding: 20px 16px;
-      border: 1.5px dashed var(--border-strong);
+      padding: 24px 20px;
+      border: 1.5px dashed var(--border-hover);
       border-radius: var(--radius-md);
-      background: rgba(15, 23, 42, 0.52);
+      background: rgba(14, 19, 31, 0.6);
       cursor: pointer;
-      transition: border-color 150ms ease, background-color 150ms ease;
+      transition: all 150ms ease;
+      min-height: 160px;
     }
 
+    .dropzone:hover,
     .dropzone.dragover {
       border-color: var(--accent);
-      background: rgba(34, 197, 94, 0.08);
-    }
-
-    .dropzone:focus-within {
-      outline: 2px solid var(--accent);
-      outline-offset: 2px;
-      border-color: var(--accent);
+      background: rgba(16, 185, 129, 0.05);
+      box-shadow: 0 0 20px rgba(16, 185, 129, 0.1);
     }
 
     .dropzone input[type="file"] {
@@ -528,92 +589,303 @@
       height: 100%;
     }
 
+    .dropzone-file-selected {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      border-radius: 999px;
+      font-size: 0.8125rem;
+      color: #6EE7B7;
+    }
+
     /* Badges */
     .badge {
       display: inline-flex;
       align-items: center;
-      gap: 5px;
-      padding: 3px 10px;
+      gap: 6px;
+      padding: 3px 9px;
       border-radius: 999px;
-      font-size: 0.75rem;
+      font-size: 0.725rem;
       font-weight: 600;
       white-space: nowrap;
       border: 1px solid transparent;
+      letter-spacing: 0.01em;
+    }
+
+    .badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
     }
 
     .badge-security {
-      background: rgba(239, 68, 68, 0.18);
+      background: rgba(239, 68, 68, 0.14);
       color: #FCA5A5;
-      border-color: rgba(239, 68, 68, 0.4);
+      border-color: rgba(239, 68, 68, 0.35);
     }
-    .badge-critical {
-      background: rgba(249, 115, 22, 0.18);
-      color: #FDBA74;
-      border-color: rgba(249, 115, 22, 0.4);
-    }
-    .badge-error {
-      background: rgba(245, 158, 11, 0.18);
-      color: #FCD34D;
-      border-color: rgba(245, 158, 11, 0.4);
-    }
-    .badge-workflow {
-      background: rgba(234, 179, 8, 0.16);
-      color: #FDE047;
-      border-color: rgba(234, 179, 8, 0.36);
-    }
-    .badge-deprecation {
-      background: rgba(167, 139, 250, 0.18);
-      color: #DDD6FE;
-      border-color: rgba(167, 139, 250, 0.38);
-    }
-    .badge-http {
-      background: rgba(56, 189, 248, 0.18);
-      color: #7DD3FC;
-      border-color: rgba(56, 189, 248, 0.38);
-    }
-    .badge-resource {
-      background: rgba(129, 140, 248, 0.18);
-      color: #C7D2FE;
-      border-color: rgba(129, 140, 248, 0.38);
-    }
-    .badge-system {
-      background: rgba(34, 197, 94, 0.18);
-      color: #86EFAC;
-      border-color: rgba(34, 197, 94, 0.38);
-    }
-    .badge-user {
-      background: rgba(20, 184, 166, 0.18);
-      color: #5EEAD4;
-      border-color: rgba(20, 184, 166, 0.38);
-    }
-    .badge-neutral {
-      background: rgba(148, 163, 184, 0.16);
-      color: #CBD5E1;
-      border-color: rgba(148, 163, 184, 0.32);
-    }
+    .badge-security .badge-dot { background: #EF4444; }
 
-    /* Chips & Filter Bar */
-    .chip-btn {
+    .badge-critical {
+      background: rgba(249, 115, 22, 0.14);
+      color: #FDBA74;
+      border-color: rgba(249, 115, 22, 0.35);
+    }
+    .badge-critical .badge-dot { background: #F97316; }
+
+    .badge-error {
+      background: rgba(245, 158, 11, 0.14);
+      color: #FCD34D;
+      border-color: rgba(245, 158, 11, 0.35);
+    }
+    .badge-error .badge-dot { background: #F59E0B; }
+
+    .badge-workflow {
+      background: rgba(234, 179, 8, 0.14);
+      color: #FDE047;
+      border-color: rgba(234, 179, 8, 0.35);
+    }
+    .badge-workflow .badge-dot { background: #EAB308; }
+
+    .badge-http {
+      background: rgba(56, 189, 248, 0.14);
+      color: #7DD3FC;
+      border-color: rgba(56, 189, 248, 0.35);
+    }
+    .badge-http .badge-dot { background: #38BDF8; }
+
+    .badge-resource {
+      background: rgba(129, 140, 248, 0.14);
+      color: #C7D2FE;
+      border-color: rgba(129, 140, 248, 0.35);
+    }
+    .badge-resource .badge-dot { background: #818CF8; }
+
+    .badge-system {
+      background: rgba(16, 185, 129, 0.14);
+      color: #6EE7B7;
+      border-color: rgba(16, 185, 129, 0.35);
+    }
+    .badge-system .badge-dot { background: #10B981; }
+
+    .badge-user {
+      background: rgba(20, 184, 166, 0.14);
+      color: #5EEAD4;
+      border-color: rgba(20, 184, 166, 0.35);
+    }
+    .badge-user .badge-dot { background: #14B8A6; }
+
+    .badge-deprecation {
+      background: rgba(167, 139, 250, 0.14);
+      color: #DDD6FE;
+      border-color: rgba(167, 139, 250, 0.35);
+    }
+    .badge-deprecation .badge-dot { background: #A78BFA; }
+
+    .badge-neutral {
+      background: rgba(107, 114, 128, 0.14);
+      color: #D1D5DB;
+      border-color: rgba(107, 114, 128, 0.35);
+    }
+    .badge-neutral .badge-dot { background: #9CA3AF; }
+
+    /* Tier Badges */
+    .tier-badge {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      min-height: 40px;
-      padding: 6px 12px;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      background: rgba(39, 47, 66, 0.72);
-      color: var(--fg-soft);
-      font-family: inherit;
-      font-size: 0.78rem;
-      font-weight: 500;
-      cursor: pointer;
-      touch-action: manipulation;
-      transition: transform 150ms var(--ease-out), border-color 150ms ease, background-color 150ms ease;
+      gap: 5px;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 0.725rem;
+      font-weight: 600;
+      font-family: var(--font-mono);
+      border: 1px solid transparent;
     }
-    .chip-btn:active {
-      transform: scale(0.97);
+    .tier-regex {
+      background: rgba(16, 185, 129, 0.12);
+      color: #34D399;
+      border-color: rgba(16, 185, 129, 0.3);
+    }
+    .tier-bert {
+      background: rgba(56, 189, 248, 0.12);
+      color: #38BDF8;
+      border-color: rgba(56, 189, 248, 0.3);
+    }
+    .tier-llm {
+      background: rgba(167, 139, 250, 0.12);
+      color: #C084FC;
+      border-color: rgba(167, 139, 250, 0.3);
     }
 
+    /* Charts */
+    .chart-box {
+      min-height: 220px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    /* Category Bar Rows */
+    .bar-list {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+
+    .bar-row {
+      display: grid;
+      grid-template-columns: minmax(130px, 160px) 1fr 64px;
+      align-items: center;
+      gap: 12px;
+      padding: 5px 8px;
+      border-radius: var(--radius-sm);
+      background: transparent;
+      border: 1px solid transparent;
+      cursor: pointer;
+      color: inherit;
+      font-family: inherit;
+      text-align: left;
+      transition: background-color 120ms ease, border-color 120ms ease;
+    }
+
+    .bar-row:hover,
+    .bar-row.active {
+      background: rgba(255, 255, 255, 0.04);
+      border-color: var(--border-hover);
+    }
+    .bar-row.active {
+      border-color: var(--accent);
+      background: rgba(16, 185, 129, 0.08);
+    }
+
+    .bar-label {
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: var(--fg-soft);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .bar-track {
+      height: 9px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.05);
+      overflow: hidden;
+      display: flex;
+    }
+
+    .bar-fill {
+      height: 100%;
+      border-radius: 999px;
+      transition: width 350ms var(--ease-out);
+    }
+
+    .bar-count-wrap {
+      text-align: right;
+      font-family: var(--font-mono);
+      font-size: 0.775rem;
+      color: var(--fg-muted);
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Donut & Tier Layout */
+    .donut-layout {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    @media (min-width: 520px) {
+      .donut-layout {
+        flex-direction: row;
+        justify-content: space-around;
+      }
+    }
+
+    .donut-legend {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 100%;
+      max-width: 290px;
+    }
+
+    .tier-card-btn {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px 14px;
+      border-radius: var(--radius-sm);
+      background: rgba(14, 19, 31, 0.6);
+      border: 1px solid var(--border);
+      color: var(--fg);
+      font-family: inherit;
+      cursor: pointer;
+      text-align: left;
+      transition: all 120ms ease;
+    }
+
+    .tier-card-btn:hover,
+    .tier-card-btn.active {
+      background: rgba(31, 41, 55, 0.6);
+      border-color: var(--border-hover);
+      transform: translateY(-1px);
+    }
+
+    .tier-card-btn.active {
+      border-color: var(--accent);
+      box-shadow: 0 0 12px var(--accent-glow);
+    }
+
+    .tier-card-left {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .tier-card-title {
+      font-size: 0.8125rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .tier-card-desc {
+      font-size: 0.7rem;
+      color: var(--fg-muted);
+    }
+
+    /* Chart Empty State */
+    .chart-empty {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 10px;
+      padding: 32px 16px;
+      color: var(--fg-muted);
+    }
+
+    .chart-empty svg {
+      opacity: 0.4;
+      stroke-width: 1.5;
+    }
+
+    .chart-empty-text {
+      font-size: 0.8125rem;
+      max-width: 280px;
+      line-height: 1.4;
+    }
+
+    /* Filter Bar */
     .filter-grid {
       display: grid;
       grid-template-columns: 1fr;
@@ -628,364 +900,412 @@
 
     @media (min-width: 1024px) {
       .filter-grid {
-        grid-template-columns: 2fr 1fr 1fr 1fr auto;
+        grid-template-columns: 2fr 1.2fr 1.2fr 1fr auto;
         align-items: end;
       }
     }
 
-    /* Charts */
-    .chart-box {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      gap: 12px;
-      flex: 1;
-      min-height: 200px;
-    }
-
-    .bar-list {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .bar-row {
-      display: grid;
-      grid-template-columns: minmax(120px, 152px) 1fr 44px;
-      align-items: center;
-      gap: 10px;
-      font-size: 0.82rem;
-      padding: 4px 6px;
-      border-radius: var(--radius-sm);
-      cursor: pointer;
-      border: 1px solid transparent;
-      background: transparent;
-      text-align: left;
-      font-family: inherit;
-      color: inherit;
-      transition: background-color 140ms ease, border-color 140ms ease;
-    }
-
-    @media (hover: hover) and (pointer: fine) {
-      .bar-row:hover {
-        background: rgba(148, 163, 184, 0.08);
-        border-color: var(--border);
-      }
-    }
-
-    @media (max-width: 420px) {
-      .bar-row {
-        grid-template-columns: 1fr 42px;
-        gap: 4px 10px;
-      }
-      .bar-label {
-        grid-column: 1 / -1;
-      }
-    }
-
-    .bar-label {
-      color: var(--fg-soft);
-      font-weight: 500;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
-    .bar-track {
-      height: 11px;
-      border-radius: 999px;
-      background: rgba(15, 23, 42, 0.85);
-      border: 1px solid rgba(148, 163, 184, 0.14);
-      overflow: hidden;
-    }
-
-    .bar-fill {
-      height: 100%;
-      border-radius: 999px;
-      transition: width 260ms var(--ease-out);
-    }
-
-    .bar-count {
-      text-align: right;
-      font-variant-numeric: tabular-nums;
-      font-family: var(--font-mono);
-      font-size: 0.8rem;
-      color: var(--fg);
-      font-weight: 600;
-    }
-
-    .donut-wrap {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 18px;
-    }
-
-    @media (min-width: 520px) {
-      .donut-wrap {
-        flex-direction: row;
-        justify-content: space-around;
-      }
-    }
-
-    .legend-list {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      width: 100%;
-      max-width: 280px;
-    }
-
-    .legend-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      padding: 10px 12px;
-      border-radius: var(--radius-sm);
-      background: rgba(15, 23, 42, 0.62);
-      border: 1px solid var(--border);
-      font-size: 0.83rem;
-      color: var(--fg);
-      font-family: inherit;
-      cursor: pointer;
-      transition: background-color 140ms ease, border-color 140ms ease;
-    }
-
-    @media (hover: hover) and (pointer: fine) {
-      .legend-item:hover {
-        background: rgba(51, 65, 85, 0.55);
-        border-color: var(--border-strong);
-      }
-    }
-
-    .legend-left {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 1px;
-    }
-
-    .legend-title-row {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-weight: 600;
-    }
-
-    .legend-meta {
-      font-size: 0.72rem;
-      color: var(--fg-muted);
-      padding-left: 18px;
-    }
-
-    .swatch {
-      width: 10px;
-      height: 10px;
-      border-radius: 3px;
-      flex-shrink: 0;
-    }
-
-    .tier-summary-strip {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-      padding-top: 8px;
-      border-top: 1px solid rgba(148, 163, 184, 0.14);
-      font-size: 0.75rem;
-      color: var(--fg-muted);
-      text-align: center;
-    }
-    @media (max-width: 480px) {
-      .tier-summary-strip {
-        grid-template-columns: 1fr;
-        text-align: left;
-      }
-    }
-
-    .timeline-svg {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
-
-    /* Desktop Table vs Mobile Cards */
-    .table-wrap {
-      display: none;
-      overflow-x: auto;
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
-    }
-
-    table.log-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.84rem;
-      text-align: left;
-    }
-
-    .log-table th {
-      position: sticky;
-      top: 0;
-      background: #162033;
-      color: var(--fg-soft);
-      font-weight: 600;
-      padding: 12px 14px;
-      border-bottom: 1px solid var(--border);
-      white-space: nowrap;
-    }
-
-    .log-table td {
-      padding: 11px 14px;
-      border-bottom: 1px solid rgba(148, 163, 184, 0.12);
-      vertical-align: top;
-    }
-
-    .log-table tbody tr:last-child td {
-      border-bottom: none;
-    }
-
-    @media (hover: hover) and (pointer: fine) {
-      .log-table tbody tr:hover {
-        background: rgba(148, 163, 184, 0.06);
-      }
-    }
-
-    .mono-cell {
-      font-family: var(--font-mono);
-      font-size: 0.8rem;
-      word-break: break-word;
-      max-width: 520px;
-    }
-
-    .ts-cell {
-      font-family: var(--font-mono);
-      font-variant-numeric: tabular-nums;
-      font-size: 0.78rem;
-      color: var(--fg-muted);
-      white-space: nowrap;
-    }
-
-    .mobile-cards {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .log-card {
-      padding: 12px 14px;
-      border-radius: var(--radius-md);
-      background: rgba(15, 23, 42, 0.65);
-      border: 1px solid var(--border);
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .log-card-top {
+    /* Filter Chips Bar */
+    .active-filters-bar {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
-      justify-content: space-between;
       gap: 6px;
-      font-size: 0.78rem;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
     }
 
-    .log-card-source {
+    .filter-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 10px;
+      border-radius: 999px;
+      background: rgba(31, 41, 55, 0.7);
+      border: 1px solid var(--border-hover);
+      font-size: 0.75rem;
+      color: var(--fg-soft);
+    }
+
+    .filter-chip-remove {
+      background: transparent;
+      border: none;
+      color: var(--fg-muted);
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      padding: 0;
+      font-size: 0.9rem;
+      line-height: 1;
+    }
+    .filter-chip-remove:hover {
+      color: #EF4444;
+    }
+
+    /* Log Explorer Tabs */
+    .tab-strip {
+      display: flex;
+      overflow-x: auto;
+      gap: 8px;
+      padding-bottom: 4px;
+      margin-bottom: 14px;
+      scrollbar-width: none;
+    }
+    .tab-strip::-webkit-scrollbar {
+      display: none;
+    }
+
+    .tab-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: var(--radius-sm);
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--fg-muted);
+      font-family: inherit;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 120ms ease;
+    }
+
+    .tab-btn:hover {
+      color: var(--fg);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .tab-btn.active {
+      color: var(--fg);
+      background: rgba(31, 41, 55, 0.75);
+      border-color: var(--border-hover);
+    }
+
+    .tab-count {
+      font-size: 0.7rem;
+      padding: 1px 6px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.08);
+      font-family: var(--font-mono);
+    }
+
+    /* Desktop Table */
+    .table-container {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow-x: auto;
+      background: rgba(14, 19, 31, 0.5);
+    }
+
+    table.data-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.8125rem;
+    }
+
+    .data-table th {
+      background: #111827;
+      color: var(--fg-muted);
       font-weight: 600;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+      user-select: none;
+    }
+
+    .data-table td {
+      padding: 11px 14px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      vertical-align: middle;
+    }
+
+    .data-table tbody tr {
+      transition: background-color 100ms ease;
+    }
+
+    .data-table tbody tr:hover {
+      background-color: rgba(255, 255, 255, 0.03);
+    }
+
+    .data-table tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    .msg-cell {
+      font-family: var(--font-mono);
+      font-size: 0.775rem;
+      color: var(--fg-soft);
+      max-width: 580px;
+      word-break: break-word;
+      line-height: 1.45;
+    }
+
+    .time-cell {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--fg-subtle);
+      white-space: nowrap;
+    }
+
+    .action-cell {
+      white-space: nowrap;
+      text-align: right;
+    }
+
+    .btn-icon {
+      width: 30px;
+      height: 30px;
+      padding: 0;
+      border-radius: var(--radius-sm);
+      display: inline-grid;
+      place-items: center;
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--fg-muted);
+      cursor: pointer;
+      transition: all 120ms ease;
+    }
+    .btn-icon:hover {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: var(--border);
       color: var(--fg);
     }
 
-    .log-card-msg {
-      margin: 0;
+    /* Mobile Cards View (<768px) */
+    .mobile-cards {
+      display: none;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .mobile-card {
+      padding: 14px;
+      border-radius: var(--radius-md);
+      background: rgba(14, 19, 31, 0.75);
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .mobile-card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .mobile-card-msg {
       font-family: var(--font-mono);
-      font-size: 0.8rem;
+      font-size: 0.775rem;
       color: var(--fg-soft);
       word-break: break-word;
       line-height: 1.45;
     }
 
-    .log-card-badges {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
-
-    @media (min-width: 768px) {
-      .table-wrap {
-        display: block;
-      }
-      .mobile-cards {
-        display: none;
-      }
-    }
-
-    .empty-state {
-      padding: 28px 16px;
-      text-align: center;
-      color: var(--fg-muted);
-      border: 1px dashed var(--border);
-      border-radius: var(--radius-md);
-      font-size: 0.9rem;
-    }
-
-    .table-footer {
-      margin-top: 12px;
+    .mobile-card-bottom {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
-      gap: 10px;
-      font-size: 0.82rem;
-      color: var(--fg-muted);
+      gap: 8px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      padding-top: 8px;
+    }
+
+    @media (max-width: 767px) {
+      .table-container {
+        display: none;
+      }
+      .mobile-cards {
+        display: flex;
+      }
+    }
+
+    /* Modal / Inspector */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      animation: fade-in 150ms ease;
+    }
+
+    .modal-dialog {
+      background: #111827;
+      border: 1px solid var(--border-hover);
+      border-radius: var(--radius-xl);
+      max-width: 640px;
+      width: 100%;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+      animation: modal-pop 160ms var(--ease-out);
+    }
+
+    @keyframes fade-in {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes modal-pop {
+      from { opacity: 0; transform: scale(0.96); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .modal-head {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .modal-body {
+      padding: 20px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .modal-code-box {
+      padding: 14px;
+      border-radius: var(--radius-sm);
+      background: #0B0F19;
+      border: 1px solid var(--border);
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      color: #E5E7EB;
+      white-space: pre-wrap;
+      word-break: break-all;
+      line-height: 1.5;
+    }
+
+    .modal-meta-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      font-size: 0.8125rem;
+    }
+
+    .modal-meta-item {
+      padding: 10px 12px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+    }
+
+    .modal-meta-title {
+      font-size: 0.7rem;
+      color: var(--fg-subtle);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 2px;
+    }
+
+    /* Toast Notification */
+    .toast-tray {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      pointer-events: none;
+    }
+
+    .toast {
+      padding: 10px 16px;
+      border-radius: var(--radius-sm);
+      background: #1F2937;
+      border: 1px solid var(--border-hover);
+      color: var(--fg);
+      font-size: 0.8125rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+      animation: toast-in 180ms var(--ease-out);
+      pointer-events: auto;
+    }
+
+    @keyframes toast-in {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after {
-        transition-duration: 0.01ms !important;
-        animation-duration: 0.01ms !important;
+        animation-duration: 0.001ms !important;
+        transition-duration: 0.001ms !important;
       }
     }
   </style>
 </head>
 <body>
-  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <a class="skip-link" href="#main-content">Skip to content</a>
 
+  <!-- Top Navigation -->
   <header class="topbar">
     <div class="topbar-inner">
       <div class="brand">
-        <div class="brand-mark" aria-hidden="true">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <div class="brand-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
             <path d="m9 12 2 2 4-4"></path>
           </svg>
         </div>
-        <div style="min-width:0">
-          <h1 class="brand-title" translate="no">
+        <div>
+          <h1 class="brand-title">
             LogGuard AI
-            <span class="arch-tag">3-Tier Hybrid Router</span>
+            <span class="brand-badge">3-Tier Hybrid Router</span>
           </h1>
-          <p class="brand-sub">Regex Rules · Sentence-BERT + Logistic Regression · Groq LLM</p>
+          <p class="brand-sub">Tier 1 Regex (&lt;0.1ms) · Tier 2 Sentence-BERT (~12ms) · Tier 3 Groq LLM</p>
         </div>
       </div>
 
       <div class="topbar-actions">
         <div class="status-pill" id="apiStatusPill" aria-live="polite">
-          <span class="status-dot" id="apiStatusDot" aria-hidden="true"></span>
+          <span class="radar-dot" id="apiStatusDot" aria-hidden="true"></span>
           <span id="apiStatusText">Checking API…</span>
         </div>
-        <a class="btn btn-ghost btn-sm" href="/docs" target="_blank" rel="noopener">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+
+        <button class="btn btn-demo" id="loadSampleNavBtn" type="button" title="Quick-load 18 real-world sample logs">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+          </svg>
+          Load Demo Data
+        </button>
+
+        <a class="btn" href="/docs" target="_blank" rel="noopener">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
             <polyline points="14 2 14 8 20 8"></polyline>
           </svg>
           API Docs
         </a>
-        <button class="btn btn-ghost btn-sm" id="clearLogsBtn" type="button">
-          Clear Data
+
+        <button class="btn btn-danger-ghost" id="clearLogsBtn" type="button" title="Clear current session data">
+          Clear
         </button>
-        <button class="btn btn-primary btn-sm" id="exportCsvBtn" type="button" disabled>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+
+        <button class="btn btn-primary" id="exportCsvBtn" type="button" disabled>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
             <polyline points="7 10 12 15 17 10"></polyline>
             <line x1="12" y1="15" x2="12" y2="3"></line>
@@ -996,72 +1316,91 @@
     </div>
   </header>
 
+  <!-- Main Content -->
   <main id="main-content" class="container">
-    <!-- KPI Row -->
-    <section aria-label="Key metrics" class="kpi-grid">
-      <article class="card kpi-card" style="--kpi-accent:#38BDF8">
+    <!-- Key Performance Indicators -->
+    <section aria-label="Key system indicators" class="kpi-grid">
+      <article class="card kpi-card" style="--kpi-glow: #38BDF8">
         <div class="kpi-top">
           <span>Logs Analyzed</span>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#38BDF8" stroke-width="2" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#38BDF8" stroke-width="2">
             <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
           </svg>
         </div>
         <div class="kpi-value" id="kpiTotal">0</div>
-        <div class="kpi-foot" id="kpiTotalSub">Awaiting real log input</div>
+        <div class="kpi-foot" id="kpiTotalSub">Awaiting live log input</div>
       </article>
 
-      <article class="card kpi-card" style="--kpi-accent:#EF4444">
+      <article class="card kpi-card" style="--kpi-glow: #EF4444">
         <div class="kpi-top">
-          <span>Security Alerts</span>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2" aria-hidden="true">
+          <span>Security Threats</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2">
             <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
             <line x1="12" y1="9" x2="12" y2="13"></line>
             <line x1="12" y1="17" x2="12.01" y2="17"></line>
           </svg>
         </div>
         <div class="kpi-value" id="kpiSecurity" style="color:#FCA5A5">0</div>
-        <div class="kpi-foot">Potential threats flagged</div>
+        <div class="kpi-foot">Immediate attention required</div>
       </article>
 
-      <article class="card kpi-card" style="--kpi-accent:#F59E0B">
+      <article class="card kpi-card" style="--kpi-glow: #F59E0B">
         <div class="kpi-top">
-          <span>System &amp; Critical Errors</span>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2" aria-hidden="true">
+          <span>Errors &amp; Failures</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2">
             <circle cx="12" cy="12" r="10"></circle>
             <line x1="12" y1="8" x2="12" y2="12"></line>
             <line x1="12" y1="16" x2="12.01" y2="16"></line>
           </svg>
         </div>
         <div class="kpi-value" id="kpiErrors" style="color:#FCD34D">0</div>
-        <div class="kpi-foot">Critical, Error &amp; Workflow issues</div>
+        <div class="kpi-foot">Critical, error &amp; workflow events</div>
       </article>
 
-      <article class="card kpi-card" style="--kpi-accent:#22C55E">
+      <article class="card kpi-card" style="--kpi-glow: #10B981">
         <div class="kpi-top">
-          <span>Local Cost Savings</span>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="2" aria-hidden="true">
+          <span>Local Cost Reduction</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2">
             <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
           </svg>
         </div>
-        <div class="kpi-value" id="kpiSavings" style="color:#86EFAC">0.0%</div>
-        <div class="kpi-foot" id="kpiSavingsSub">Handled locally without LLM cost</div>
+        <div class="kpi-value" id="kpiSavings" style="color:#6EE7B7">0.0%</div>
+        <div class="kpi-foot" id="kpiSavingsSub">Resolved locally with zero token cost</div>
       </article>
     </section>
 
-    <!-- Interactive Workspace: Live Single Log + Batch File Upload -->
-    <section aria-label="Interactive testing and upload" class="grid-2">
+    <!-- Interactive Classification Workspace -->
+    <section aria-label="Interactive testing workspace" class="grid-2">
+      <!-- Live Single Log Classifier -->
       <article class="card">
         <div class="card-header">
           <div>
             <h2 class="card-title">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="2" aria-hidden="true">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2">
                 <polyline points="4 17 10 11 4 5"></polyline>
                 <line x1="12" y1="19" x2="20" y2="19"></line>
               </svg>
               Live Single-Log Classifier
             </h2>
-            <p class="card-subtitle">Classify any real application or server log line immediately</p>
+            <p class="card-subtitle">Test real-time routing across Regex, BERT, and Groq LLM</p>
           </div>
+        </div>
+
+        <!-- Quick Presets -->
+        <div class="preset-strip">
+          <span class="preset-label">Presets:</span>
+          <button type="button" class="preset-chip" data-src="BillingSystem" data-msg="User User8841 logged in.">
+            🔑 Auth Login (Regex)
+          </button>
+          <button type="button" class="preset-chip" data-src="AnalyticsEngine" data-msg="Security breach suspected from IP address 192.168.252.92">
+            🚨 Security Alert (BERT)
+          </button>
+          <button type="button" class="preset-chip" data-src="ModernHR" data-msg="Failure occurred in critical system component: component ID Component92">
+            💥 System Crash (BERT)
+          </button>
+          <button type="button" class="preset-chip" data-src="LegacyCRM" data-msg="Order approval workflow stalled at step 3 due to missing manager sign-off.">
+            🤖 Legacy CRM (LLM)
+          </button>
         </div>
 
         <form id="singleLogForm">
@@ -1070,23 +1409,22 @@
             <input
               id="singleSource"
               name="source"
-              list="sourceOptions"
+              list="sourceSuggestions"
               class="control"
               autocomplete="off"
               spellcheck="false"
-              placeholder="Enter any app/service (e.g. Nginx, AuthService, LegacyCRM)…"
+              placeholder="e.g. Nginx, BillingSystem, ModernHR, LegacyCRM…"
               required
             />
-            <datalist id="sourceOptions">
-              <option value="Nginx"></option>
-              <option value="AuthService"></option>
-              <option value="PaymentGateway"></option>
+            <datalist id="sourceSuggestions">
               <option value="ModernCRM"></option>
               <option value="BillingSystem"></option>
               <option value="AnalyticsEngine"></option>
               <option value="ModernHR"></option>
               <option value="ThirdPartyAPI"></option>
               <option value="LegacyCRM"></option>
+              <option value="AuthService"></option>
+              <option value="Nginx"></option>
             </datalist>
           </div>
 
@@ -1097,17 +1435,20 @@
               name="log_message"
               class="control"
               spellcheck="false"
-              placeholder="Paste any real server, API, database, or security log message…"
+              placeholder="Paste any raw server, API, security, or enterprise log line…"
               required
             ></textarea>
           </div>
 
           <label class="checkbox-row">
             <input type="checkbox" id="addToSessionCheck" checked />
-            <span>Add classified result to dashboard analytics</span>
+            <span>Add classified result to dashboard analytics and timeline</span>
           </label>
 
           <button class="btn btn-primary" id="singleSubmitBtn" type="submit" style="width:100%">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
             Classify Log Message
           </button>
         </form>
@@ -1115,24 +1456,25 @@
         <div id="singleResult" class="result-banner" aria-live="polite" hidden></div>
       </article>
 
+      <!-- Batch File Upload -->
       <article class="card">
         <div class="card-header">
           <div>
             <h2 class="card-title">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#38BDF8" stroke-width="2" aria-hidden="true">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#38BDF8" stroke-width="2">
                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                 <polyline points="17 8 12 3 7 8"></polyline>
                 <line x1="12" y1="3" x2="12" y2="15"></line>
               </svg>
               Upload Real Log File (.csv, .log, .txt)
             </h2>
-            <p class="card-subtitle">Supports CSVs (<code translate="no">log_message</code>/<code translate="no">message</code>) and raw server <code translate="no">.log</code>/<code translate="no">.txt</code> files</p>
+            <p class="card-subtitle">Batch processes server files with automated schema normalization</p>
           </div>
         </div>
 
-        <div class="upload-body">
+        <div style="display:flex;flex-direction:column;gap:14px;height:calc(100% - 60px);justify-content:space-between">
           <div class="field-group" style="margin-bottom:0">
-            <label class="field-label" for="defaultUploadSource">Default Source (if file has no source column)</label>
+            <label class="field-label" for="defaultUploadSource">Default Source (if missing in file)</label>
             <input
               id="defaultUploadSource"
               type="text"
@@ -1140,21 +1482,21 @@
               autocomplete="off"
               spellcheck="false"
               value="ProductionServer"
-              placeholder="e.g. ProductionServer, Nginx, LegacyCRM…"
+              placeholder="e.g. ProductionServer, WebGateway…"
             />
           </div>
 
           <div class="dropzone" id="dropzone">
-            <input id="csvFileInput" type="file" accept=".csv,.log,.txt,text/csv,text/plain" aria-label="Choose real log file to classify" />
-            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="1.8" aria-hidden="true">
+            <input id="csvFileInput" type="file" accept=".csv,.log,.txt,text/csv,text/plain" aria-label="Drop or choose a log file" />
+            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="1.6" aria-hidden="true">
               <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
               <polyline points="14 2 14 8 20 8"></polyline>
               <line x1="12" y1="18" x2="12" y2="12"></line>
               <line x1="9" y1="15" x2="15" y2="15"></line>
             </svg>
-            <strong id="dropzoneTitle">Tap or drop a .csv, .log, or .txt file here</strong>
-            <span style="font-size:0.8rem;color:var(--fg-muted)" id="dropzoneSub">
-              Processed locally by Regex &amp; BERT (LegacyCRM routed to Groq LLM)
+            <strong id="dropzoneTitle" style="font-size:0.9rem">Drag &amp; drop a .csv, .log, or .txt file</strong>
+            <span id="dropzoneSub" style="font-size:0.775rem;color:var(--fg-muted)">
+              Or click to browse your computer
             </span>
           </div>
 
@@ -1167,71 +1509,102 @@
       </article>
     </section>
 
-    <!-- Visualizations Row 1 -->
-    <section aria-label="Category and routing charts" class="grid-2">
+    <!-- Visual Analytics: Row 1 -->
+    <section aria-label="Category and architecture analytics" class="grid-2">
+      <!-- Category Chart -->
       <article class="card">
         <div class="card-header">
           <div>
             <h2 class="card-title">Log Distribution by Category</h2>
-            <p class="card-subtitle">Click any category bar to filter the explorer below</p>
+            <p class="card-subtitle">Click any category bar to filter the log explorer below</p>
           </div>
+          <span id="categoryCountBadge" class="brand-badge" hidden>0 Categories</span>
         </div>
         <div class="chart-box" id="categoryChart"></div>
       </article>
 
+      <!-- Routing Share Donut -->
       <article class="card">
         <div class="card-header">
           <div>
             <h2 class="card-title">Hybrid Architecture Routing Share</h2>
-            <p class="card-subtitle">Click a tier card to filter logs by classification engine</p>
+            <p class="card-subtitle">Zero-cost local engines vs. Groq LLM API invocation</p>
           </div>
+          <span id="savingsTag" class="brand-badge" style="background:rgba(16,185,129,0.12);border-color:rgba(16,185,129,0.3);color:#6EE7B7" hidden>
+            0% Saved
+          </span>
         </div>
         <div class="chart-box" id="tierChart"></div>
       </article>
     </section>
 
-    <!-- Visualizations Row 2 -->
-    <section aria-label="Source and timeline charts" class="grid-2">
+    <!-- Visual Analytics: Row 2 -->
+    <section aria-label="Source and timeline analytics" class="grid-2">
+      <!-- Source Breakdown -->
       <article class="card">
         <div class="card-header">
           <div>
             <h2 class="card-title">Events by Application Source</h2>
-            <p class="card-subtitle">Stacked volume split between alerts, errors, and normal events</p>
+            <p class="card-subtitle">Breakdown of normal operational logs vs. alerts &amp; errors</p>
           </div>
         </div>
         <div class="chart-box" id="sourceChart"></div>
       </article>
 
+      <!-- Event Timeline -->
       <article class="card">
         <div class="card-header">
           <div>
             <h2 class="card-title">Log Event Timeline</h2>
-            <p class="card-subtitle">Total volume vs. security &amp; error spikes over time</p>
+            <p class="card-subtitle">Total event throughput and anomaly spike distribution</p>
           </div>
         </div>
         <div class="chart-box" id="timelineChart"></div>
       </article>
     </section>
 
-    <!-- Search & Filter + Logs View -->
-    <section class="card" aria-label="Classified log explorer">
+    <!-- Classified Log Explorer -->
+    <section class="card" aria-label="Classified Log Explorer">
       <div class="card-header">
         <div>
           <h2 class="card-title">Classified Log Explorer</h2>
-          <p class="card-subtitle" id="explorerCount">No logs loaded yet</p>
+          <p class="card-subtitle" id="explorerCount">Awaiting real log data</p>
         </div>
       </div>
 
-      <div class="filter-grid" style="margin-bottom:16px">
+      <!-- Quick Triage Tabs -->
+      <div class="tab-strip" id="triageTabs" role="tablist">
+        <button type="button" class="tab-btn active" data-tab="all" role="tab" aria-selected="true">
+          All Logs <span class="tab-count" id="tabCountAll">0</span>
+        </button>
+        <button type="button" class="tab-btn" data-tab="security" role="tab" aria-selected="false">
+          🚨 Security <span class="tab-count" id="tabCountSecurity">0</span>
+        </button>
+        <button type="button" class="tab-btn" data-tab="errors" role="tab" aria-selected="false">
+          ⚠️ Errors &amp; Critical <span class="tab-count" id="tabCountErrors">0</span>
+        </button>
+        <button type="button" class="tab-btn" data-tab="regex" role="tab" aria-selected="false">
+          ⚡ Regex Tier <span class="tab-count" id="tabCountRegex">0</span>
+        </button>
+        <button type="button" class="tab-btn" data-tab="bert" role="tab" aria-selected="false">
+          🧠 BERT Tier <span class="tab-count" id="tabCountBert">0</span>
+        </button>
+        <button type="button" class="tab-btn" data-tab="llm" role="tab" aria-selected="false">
+          🤖 LLM Tier <span class="tab-count" id="tabCountLlm">0</span>
+        </button>
+      </div>
+
+      <!-- Search & Filters -->
+      <div class="filter-grid">
         <div class="field-group" style="margin-bottom:0">
-          <label class="field-label" for="searchInput">Search Log Messages</label>
+          <label class="field-label" for="searchInput">Full-Text Search</label>
           <input
             id="searchInput"
             type="search"
             class="control"
             autocomplete="off"
             spellcheck="false"
-            placeholder="Filter by IP, user ID, error text…"
+            placeholder="Search IP, user ID, error code, keyword…"
           />
         </div>
 
@@ -1250,94 +1623,214 @@
         </div>
 
         <div class="field-group" style="margin-bottom:0">
-          <label class="field-label" for="filterTier">Tier</label>
+          <label class="field-label" for="filterTier">Engine Tier</label>
           <select id="filterTier" class="control">
             <option value="ALL">All Tiers</option>
           </select>
         </div>
 
-        <button class="btn" id="resetFiltersBtn" type="button">Reset</button>
-      </div>
-
-      <div style="margin-bottom:14px">
-        <button type="button" class="chip-btn" id="alertsOnlyBtn" aria-pressed="false">
-          Show Security &amp; Critical Alerts Only
+        <button class="btn" id="resetFiltersBtn" type="button" title="Reset all search filters">
+          Reset
         </button>
       </div>
 
-      <div class="table-wrap" id="desktopTableWrap">
-        <table class="log-table">
+      <!-- Active Filter Chips Strip -->
+      <div class="active-filters-bar" id="activeFiltersBar" hidden>
+        <span style="font-size:0.75rem;color:var(--fg-subtle)">Active:</span>
+        <div id="filterChipsList" style="display:flex;flex-wrap:wrap;gap:6px"></div>
+      </div>
+
+      <!-- Table View -->
+      <div class="table-container" style="margin-top:14px" id="desktopTableContainer">
+        <table class="data-table">
           <thead>
             <tr>
-              <th>Timestamp</th>
-              <th>Source</th>
-              <th>Category</th>
-              <th>Tier</th>
+              <th style="width:160px">Timestamp</th>
+              <th style="width:140px">Source</th>
+              <th style="width:160px">Category</th>
+              <th style="width:100px">Tier</th>
               <th>Log Message</th>
+              <th style="width:70px;text-align:right">Action</th>
             </tr>
           </thead>
           <tbody id="logTableBody"></tbody>
         </table>
       </div>
 
-      <div class="mobile-cards" id="mobileCards"></div>
+      <!-- Mobile Cards View -->
+      <div class="mobile-cards" id="mobileCardsView" style="margin-top:14px"></div>
 
-      <div id="emptyState" class="empty-state">
-        No logs classified yet. Upload a real <strong>.csv</strong>, <strong>.log</strong>, or <strong>.txt</strong> file—or classify a log line above—to begin.
+      <!-- Empty State -->
+      <div id="tableEmptyState" class="chart-empty" style="padding:48px 16px">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+          <line x1="16" y1="13" x2="8" y2="13"></line>
+          <line x1="16" y1="17" x2="8" y2="17"></line>
+          <polyline points="10 9 9 9 8 9"></polyline>
+        </svg>
+        <p class="chart-empty-text" id="tableEmptyText">
+          No logs loaded yet. Click <strong>Load Demo Data</strong> above, or upload a real log file to begin.
+        </p>
+        <button class="btn btn-demo" id="emptyStateDemoBtn" type="button">
+          ⚡ Load 18 Demo Logs
+        </button>
       </div>
 
-      <div class="table-footer">
-        <span id="paginationInfo">0 items</span>
-        <button class="btn btn-sm" id="showMoreBtn" type="button" hidden>Show 25 More</button>
+      <!-- Table Footer / Pagination -->
+      <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;margin-top:14px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.05)">
+        <span style="font-size:0.775rem;color:var(--fg-muted)" id="paginationCount">0 logs displayed</span>
+        <button class="btn btn-sm" id="showMoreBtn" type="button" hidden>Show More Logs</button>
       </div>
     </section>
   </main>
 
+  <!-- Inspector Modal -->
+  <div class="modal-overlay" id="inspectorModal" hidden>
+    <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-head">
+        <h3 id="modalTitle" style="font-size:1rem;font-weight:600;display:flex;align-items:center;gap:8px">
+          <span>Log Details &amp; Routing Inspector</span>
+        </h3>
+        <button class="btn-icon" id="closeModalBtn" type="button" aria-label="Close dialog">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+            <span style="font-size:0.75rem;font-weight:600;color:var(--fg-muted);text-transform:uppercase">Raw Log Message</span>
+            <button class="btn btn-sm" id="modalCopyBtn" type="button">
+              Copy Message
+            </button>
+          </div>
+          <div class="modal-code-box" id="modalRawMessage"></div>
+        </div>
+
+        <div class="modal-meta-grid">
+          <div class="modal-meta-item">
+            <div class="modal-meta-title">Classified Category</div>
+            <div id="modalCategoryBadge"></div>
+          </div>
+          <div class="modal-meta-item">
+            <div class="modal-meta-title">Routing Engine</div>
+            <div id="modalTierBadge"></div>
+          </div>
+          <div class="modal-meta-item">
+            <div class="modal-meta-title">Application Source</div>
+            <strong id="modalSource" style="font-size:0.875rem"></strong>
+          </div>
+          <div class="modal-meta-item">
+            <div class="modal-meta-title">Timestamp</div>
+            <span id="modalTimestamp" class="time-cell"></span>
+          </div>
+        </div>
+
+        <div>
+          <span style="font-size:0.75rem;font-weight:600;color:var(--fg-muted);text-transform:uppercase;margin-bottom:6px;display:block">
+            Architectural Routing Rationale
+          </span>
+          <div id="modalRationale" style="font-size:0.8125rem;color:var(--fg-soft);line-height:1.5;background:rgba(255,255,255,0.02);padding:12px;border-radius:var(--radius-sm);border:1px solid var(--border)"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Tray -->
+  <div class="toast-tray" id="toastTray" aria-live="polite"></div>
+
+  <!-- Client Script -->
   <script>
     const state = {
       allLogs: [],
       filteredLogs: [],
-      alertsOnly: false,
+      activeTab: "all",
+      selectedCategory: null,
+      selectedTier: null,
       visibleLimit: 25,
       selectedFile: null,
     };
 
-    const CATEGORY_COLORS = {
-      "Security Alert": { badge: "badge-security", bar: "#EF4444" },
-      "Critical Error": { badge: "badge-critical", bar: "#F97316" },
-      "Error": { badge: "badge-error", bar: "#F59E0B" },
-      "Workflow Error": { badge: "badge-workflow", bar: "#EAB308" },
-      "Deprecation Warning": { badge: "badge-deprecation", bar: "#A78BFA" },
-      "HTTP Status": { badge: "badge-http", bar: "#38BDF8" },
-      "Resource Usage": { badge: "badge-resource", bar: "#818CF8" },
-      "System Notification": { badge: "badge-system", bar: "#22C55E" },
-      "User Action": { badge: "badge-user", bar: "#14B8A6" },
-      "Unclassified": { badge: "badge-neutral", bar: "#94A3B8" },
+    const CATEGORY_CONFIG = {
+      "Security Alert": { badge: "badge-security", hex: "#EF4444" },
+      "Critical Error": { badge: "badge-critical", hex: "#F97316" },
+      "Error": { badge: "badge-error", hex: "#F59E0B" },
+      "Workflow Error": { badge: "badge-workflow", hex: "#EAB308" },
+      "Deprecation Warning": { badge: "badge-deprecation", hex: "#A78BFA" },
+      "HTTP Status": { badge: "badge-http", hex: "#38BDF8" },
+      "Resource Usage": { badge: "badge-resource", hex: "#818CF8" },
+      "System Notification": { badge: "badge-system", hex: "#10B981" },
+      "User Action": { badge: "badge-user", hex: "#14B8A6" },
+      "Unclassified": { badge: "badge-neutral", hex: "#9CA3AF" },
     };
 
-    const TIER_META = {
-      "Regex": { badge: "badge-system", hex: "#22C55E", note: "<0.1 ms · $0 local rules" },
-      "BERT": { badge: "badge-http", hex: "#38BDF8", note: "~12 ms · $0 local ML" },
-      "LLM": { badge: "badge-deprecation", hex: "#A78BFA", note: "Groq API · rare logs" },
-      "Unknown": { badge: "badge-neutral", hex: "#94A3B8", note: "Pre-computed" },
+    const TIER_CONFIG = {
+      "Regex": {
+        cls: "tier-regex",
+        hex: "#10B981",
+        label: "Tier 1: Regex",
+        note: "&lt;0.1 ms · $0 local rules",
+        desc: "Instant pattern matching on deterministic operational and user action templates.",
+      },
+      "BERT": {
+        cls: "tier-bert",
+        hex: "#38BDF8",
+        label: "Tier 2: Sentence-BERT",
+        note: "~12 ms · $0 local ML",
+        desc: "Semantic dense embeddings + Logistic Regression classifier with high confidence score.",
+      },
+      "LLM": {
+        cls: "tier-llm",
+        hex: "#A78BFA",
+        label: "Tier 3: Groq LLM",
+        note: "Groq API · rare/legacy logs",
+        desc: "Deep reasoning LLM (openai/gpt-oss-120b) invoked exclusively for rare, unstructured legacy logs.",
+      },
+      "Unknown": {
+        cls: "tier-regex",
+        hex: "#9CA3AF",
+        label: "Tier: Unknown",
+        note: "Pre-computed",
+        desc: "System default routing tier.",
+      },
     };
 
-    const HIGH_SEVERITY = new Set(["Security Alert", "Critical Error", "Error", "Workflow Error"]);
+    const HIGH_SEVERITY_SET = new Set(["Security Alert", "Critical Error", "Error", "Workflow Error"]);
 
-    function escapeHtml(text) {
+    function escapeHtml(str) {
+      if (str == null) return "";
       const div = document.createElement("div");
-      div.textContent = text == null ? "" : String(text);
+      div.textContent = String(str);
       return div.innerHTML;
     }
 
+    function showToast(msg, isSuccess = true) {
+      const tray = document.getElementById("toastTray");
+      const toast = document.createElement("div");
+      toast.className = "toast";
+      toast.innerHTML = `
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="${isSuccess ? '#10B981' : '#EF4444'}" stroke-width="2.5">
+          ${isSuccess ? '<polyline points="20 6 9 17 4 12"></polyline>' : '<circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line>'}
+        </svg>
+        <span>${escapeHtml(msg)}</span>
+      `;
+      tray.appendChild(toast);
+      setTimeout(() => {
+        toast.style.opacity = "0";
+        toast.style.transform = "translateY(10px)";
+        toast.style.transition = "all 150ms ease";
+        setTimeout(() => toast.remove(), 160);
+      }, 2600);
+    }
+
     function categoryBadge(label) {
-      const cfg = CATEGORY_COLORS[label] || CATEGORY_COLORS["Unclassified"];
-      return `<span class="badge ${cfg.badge}">${escapeHtml(label || "Unclassified")}</span>`;
+      const cfg = CATEGORY_CONFIG[label] || CATEGORY_CONFIG["Unclassified"];
+      return `<span class="badge ${cfg.badge}"><span class="badge-dot"></span>${escapeHtml(label || "Unclassified")}</span>`;
     }
 
     function tierBadge(tier) {
-      const cfg = TIER_META[tier] || TIER_META["Unknown"];
-      return `<span class="badge ${cfg.badge}">${escapeHtml(tier || "Unknown")}</span>`;
+      const cfg = TIER_CONFIG[tier] || TIER_CONFIG["Unknown"];
+      const icon = tier === "Regex" ? "⚡" : tier === "BERT" ? "🧠" : "🤖";
+      return `<span class="tier-badge ${cfg.cls}">${icon} ${escapeHtml(tier || "Unknown")}</span>`;
     }
 
     async function checkApiHealth() {
@@ -1345,12 +1838,11 @@
       const txt = document.getElementById("apiStatusText");
       try {
         const res = await fetch("/health");
-        if (!res.ok) throw new Error("API error");
-        const now = new Intl.DateTimeFormat(undefined, { hour: "2-digit", minute: "2-digit" }).format(new Date());
-        dot.className = "status-dot online";
-        txt.textContent = `Live API · ${now}`;
+        if (!res.ok) throw new Error("Offline");
+        dot.className = "radar-dot online";
+        txt.textContent = "Live API Online";
       } catch {
-        dot.className = "status-dot offline";
+        dot.className = "radar-dot";
         txt.textContent = "API Offline";
       }
     }
@@ -1358,7 +1850,7 @@
     async function fetchSessionLogs() {
       try {
         const res = await fetch("/api/logs");
-        if (!res.ok) throw new Error("Could not load logs");
+        if (!res.ok) throw new Error();
         const data = await res.json();
         setLogs(data.logs || []);
       } catch {
@@ -1370,11 +1862,11 @@
       state.allLogs = logs;
       state.visibleLimit = 25;
       document.getElementById("exportCsvBtn").disabled = logs.length === 0;
-      populateFilterOptions();
+      updateFilterDropdowns();
       applyFilters();
     }
 
-    function populateFilterOptions() {
+    function updateFilterDropdowns() {
       const sources = [...new Set(state.allLogs.map(l => l.source).filter(Boolean))].sort();
       const labels = [...new Set(state.allLogs.map(l => l.target_label).filter(Boolean))].sort();
       const tiers = [...new Set(state.allLogs.map(l => l.classification_tier).filter(Boolean))].sort();
@@ -1384,42 +1876,96 @@
       fillSelect("filterTier", "All Tiers", tiers);
     }
 
-    function fillSelect(id, allText, values) {
+    function fillSelect(id, allLabel, items) {
       const el = document.getElementById(id);
       const prev = el.value;
-      el.innerHTML = `<option value="ALL">${allText}</option>` +
-        values.map(v => `<option value="${escapeHtml(v)}">${escapeHtml(v)}</option>`).join("");
-      if (values.includes(prev)) el.value = prev;
+      el.innerHTML = `<option value="ALL">${allLabel}</option>` +
+        items.map(it => `<option value="${escapeHtml(it)}">${escapeHtml(it)}</option>`).join("");
+      if (items.includes(prev)) el.value = prev;
     }
 
     function applyFilters() {
       const q = document.getElementById("searchInput").value.trim().toLowerCase();
       const src = document.getElementById("filterSource").value;
-      const lbl = document.getElementById("filterLabel").value;
-      const tier = document.getElementById("filterTier").value;
+      const lbl = state.selectedCategory || document.getElementById("filterLabel").value;
+      const tier = state.selectedTier || document.getElementById("filterTier").value;
 
       state.filteredLogs = state.allLogs.filter(row => {
+        // Tab filtering
+        if (state.activeTab === "security" && row.target_label !== "Security Alert") return false;
+        if (state.activeTab === "errors" && !["Error", "Critical Error", "Workflow Error"].includes(row.target_label)) return false;
+        if (state.activeTab === "regex" && row.classification_tier !== "Regex") return false;
+        if (state.activeTab === "bert" && row.classification_tier !== "BERT") return false;
+        if (state.activeTab === "llm" && row.classification_tier !== "LLM") return false;
+
+        // Dropdown / chart selection
         if (src !== "ALL" && row.source !== src) return false;
         if (lbl !== "ALL" && row.target_label !== lbl) return false;
         if (tier !== "ALL" && row.classification_tier !== tier) return false;
-        if (state.alertsOnly && !HIGH_SEVERITY.has(row.target_label)) return false;
+
+        // Search
         if (q) {
-          const hay = `${row.source || ""} ${row.log_message || ""} ${row.target_label || ""}`.toLowerCase();
+          const hay = `${row.source || ""} ${row.log_message || ""} ${row.target_label || ""} ${row.classification_tier || ""}`.toLowerCase();
           if (!hay.includes(q)) return false;
         }
         return true;
       });
 
-      renderAll();
-    }
-
-    function renderAll() {
+      renderActiveFilterChips();
       renderKPIs();
       renderCategoryChart();
       renderTierChart();
       renderSourceChart();
       renderTimelineChart();
       renderLogsView();
+      updateTabCounts();
+    }
+
+    function renderActiveFilterChips() {
+      const container = document.getElementById("activeFiltersBar");
+      const list = document.getElementById("filterChipsList");
+      const chips = [];
+
+      const q = document.getElementById("searchInput").value.trim();
+      const src = document.getElementById("filterSource").value;
+      const lbl = state.selectedCategory || document.getElementById("filterLabel").value;
+      const tier = state.selectedTier || document.getElementById("filterTier").value;
+
+      if (q) chips.push({ label: `Search: "${q}"`, clear: () => { document.getElementById("searchInput").value = ""; } });
+      if (src !== "ALL") chips.push({ label: `Source: ${src}`, clear: () => { document.getElementById("filterSource").value = "ALL"; } });
+      if (lbl !== "ALL") chips.push({ label: `Category: ${lbl}`, clear: () => { state.selectedCategory = null; document.getElementById("filterLabel").value = "ALL"; } });
+      if (tier !== "ALL") chips.push({ label: `Tier: ${tier}`, clear: () => { state.selectedTier = null; document.getElementById("filterTier").value = "ALL"; } });
+
+      if (chips.length === 0) {
+        container.hidden = true;
+        list.innerHTML = "";
+        return;
+      }
+
+      container.hidden = false;
+      list.innerHTML = chips.map((c, i) => `
+        <span class="filter-chip">
+          ${escapeHtml(c.label)}
+          <button type="button" class="filter-chip-remove" data-chip-idx="${i}" aria-label="Remove filter">✕</button>
+        </span>
+      `).join("");
+
+      list.querySelectorAll("[data-chip-idx]").forEach(btn => {
+        btn.addEventListener("click", () => {
+          chips[btn.dataset.chipIdx].clear();
+          applyFilters();
+        });
+      });
+    }
+
+    function updateTabCounts() {
+      const logs = state.allLogs;
+      document.getElementById("tabCountAll").textContent = logs.length;
+      document.getElementById("tabCountSecurity").textContent = logs.filter(l => l.target_label === "Security Alert").length;
+      document.getElementById("tabCountErrors").textContent = logs.filter(l => ["Error", "Critical Error", "Workflow Error"].includes(l.target_label)).length;
+      document.getElementById("tabCountRegex").textContent = logs.filter(l => l.classification_tier === "Regex").length;
+      document.getElementById("tabCountBert").textContent = logs.filter(l => l.classification_tier === "BERT").length;
+      document.getElementById("tabCountLlm").textContent = logs.filter(l => l.classification_tier === "LLM").length;
     }
 
     function renderKPIs() {
@@ -1428,53 +1974,80 @@
       const security = logs.filter(l => l.target_label === "Security Alert").length;
       const errors = logs.filter(l => ["Error", "Critical Error", "Workflow Error"].includes(l.target_label)).length;
       const localCount = logs.filter(l => ["Regex", "BERT"].includes(l.classification_tier)).length;
-      const pct = total > 0 ? ((localCount / total) * 100).toFixed(1) : "0.0";
+      const savingsPct = total > 0 ? ((localCount / total) * 100).toFixed(1) : "0.0";
 
       document.getElementById("kpiTotal").textContent = new Intl.NumberFormat().format(total);
-      document.getElementById("kpiTotalSub").textContent = total > 0 ? "Matching active filters" : "Awaiting real log input";
+      document.getElementById("kpiTotalSub").textContent = total > 0 ? `${total} logs matching active filters` : "Awaiting live log input";
       document.getElementById("kpiSecurity").textContent = new Intl.NumberFormat().format(security);
       document.getElementById("kpiErrors").textContent = new Intl.NumberFormat().format(errors);
-      document.getElementById("kpiSavings").textContent = `${pct}%`;
-      document.getElementById("kpiSavingsSub").textContent = total > 0
-        ? `${localCount} of ${total} without LLM tokens`
-        : "Handled locally without LLM cost";
+      document.getElementById("kpiSavings").textContent = `${savingsPct}%`;
+      document.getElementById("kpiSavingsSub").textContent = total > 0 ? `${localCount} of ${total} resolved without LLM tokens` : "Resolved locally with zero token cost";
+
+      const savingsTag = document.getElementById("savingsTag");
+      if (total > 0) {
+        savingsTag.hidden = false;
+        savingsTag.textContent = `${savingsPct}% Local Savings`;
+      } else {
+        savingsTag.hidden = true;
+      }
     }
 
     function renderCategoryChart() {
       const container = document.getElementById("categoryChart");
+      const badge = document.getElementById("categoryCountBadge");
       const logs = state.filteredLogs;
+
       if (logs.length === 0) {
-        container.innerHTML = `<div class="empty-state">Upload a log file or classify a log line to see category distribution.</div>`;
+        container.innerHTML = `
+          <div class="chart-empty">
+            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <line x1="18" y1="20" x2="18" y2="10"></line>
+              <line x1="12" y1="20" x2="12" y2="4"></line>
+              <line x1="6" y1="20" x2="6" y2="14"></line>
+            </svg>
+            <span class="chart-empty-text">No logs available. Upload a file or click Demo Data to visualize categories.</span>
+          </div>
+        `;
+        badge.hidden = true;
         return;
       }
 
       const counts = {};
       logs.forEach(l => {
-        const key = l.target_label || "Unclassified";
-        counts[key] = (counts[key] || 0) + 1;
+        const cat = l.target_label || "Unclassified";
+        counts[cat] = (counts[cat] || 0) + 1;
       });
 
       const entries = Object.entries(counts).sort((a, b) => b[1] - a[1]);
       const maxVal = Math.max(...entries.map(e => e[1]), 1);
 
-      container.innerHTML = `<div class="bar-list">${entries.map(([name, val]) => {
-        const widthPct = Math.max((val / maxVal) * 100, 4);
-        const color = (CATEGORY_COLORS[name] || CATEGORY_COLORS["Unclassified"]).bar;
-        return `
-          <button type="button" class="bar-row" data-filter-label="${escapeHtml(name)}" title="Filter by ${escapeHtml(name)}">
-            <span class="bar-label">${escapeHtml(name)}</span>
-            <div class="bar-track" aria-hidden="true">
-              <div class="bar-fill" style="width:${widthPct}%;background:${color}"></div>
-            </div>
-            <span class="bar-count">${val}</span>
-          </button>
-        `;
-      }).join("")}</div>`;
+      badge.hidden = false;
+      badge.textContent = `${entries.length} Categories`;
 
-      container.querySelectorAll("[data-filter-label]").forEach(btn => {
+      container.innerHTML = `
+        <div class="bar-list">
+          ${entries.map(([name, val]) => {
+            const widthPct = Math.max((val / maxVal) * 100, 3);
+            const color = (CATEGORY_CONFIG[name] || CATEGORY_CONFIG["Unclassified"]).hex;
+            const isActive = state.selectedCategory === name;
+            return `
+              <button type="button" class="bar-row ${isActive ? 'active' : ''}" data-cat-name="${escapeHtml(name)}">
+                <span class="bar-label">${escapeHtml(name)}</span>
+                <div class="bar-track" aria-hidden="true">
+                  <div class="bar-fill" style="width:${widthPct}%;background:linear-gradient(90deg, ${color}dd, ${color})"></div>
+                </div>
+                <span class="bar-count-wrap"><strong>${val}</strong> <span style="font-size:0.68rem;opacity:0.65">(${((val / logs.length) * 100).toFixed(0)}%)</span></span>
+              </button>
+            `;
+          }).join("")}
+        </div>
+      `;
+
+      container.querySelectorAll("[data-cat-name]").forEach(btn => {
         btn.addEventListener("click", () => {
-          const select = document.getElementById("filterLabel");
-          select.value = select.value === btn.dataset.filterLabel ? "ALL" : btn.dataset.filterLabel;
+          const clicked = btn.dataset.catName;
+          state.selectedCategory = state.selectedCategory === clicked ? null : clicked;
+          document.getElementById("filterLabel").value = state.selectedCategory || "ALL";
           applyFilters();
         });
       });
@@ -1483,70 +2056,79 @@
     function renderTierChart() {
       const container = document.getElementById("tierChart");
       const logs = state.filteredLogs;
+
       if (logs.length === 0) {
-        container.innerHTML = `<div class="empty-state">Classification engine share (Regex vs. BERT vs. LLM) will appear here.</div>`;
+        container.innerHTML = `
+          <div class="chart-empty">
+            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="8" x2="12" y2="12"></line>
+              <line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg>
+            <span class="chart-empty-text">Routing shares across Regex, Sentence-BERT, and LLM will appear here.</span>
+          </div>
+        `;
         return;
       }
 
-      const counts = {};
+      const counts = { Regex: 0, BERT: 0, LLM: 0 };
       logs.forEach(l => {
         const t = l.classification_tier || "Unknown";
         counts[t] = (counts[t] || 0) + 1;
       });
 
       const total = logs.length;
-      const entries = Object.entries(counts).sort((a, b) => b[1] - a[1]);
-      const radius = 62;
+      const radius = 60;
       const circumference = 2 * Math.PI * radius;
       let offset = 0;
 
-      const segments = entries.map(([tier, val]) => {
+      const tiersOrder = ["Regex", "BERT", "LLM"];
+      const segments = tiersOrder.map(tier => {
+        const val = counts[tier] || 0;
         const dash = (val / total) * circumference;
-        const hex = (TIER_META[tier] || TIER_META["Unknown"]).hex;
-        const svgEl = `<circle cx="84" cy="84" r="${radius}" fill="none" stroke="${hex}" stroke-width="20"
+        const color = (TIER_CONFIG[tier] || TIER_CONFIG["Unknown"]).hex;
+        const seg = `<circle cx="80" cy="80" r="${radius}" fill="none" stroke="${color}" stroke-width="18"
           stroke-dasharray="${dash} ${circumference - dash}" stroke-dashoffset="${-offset}" />`;
         offset += dash;
-        return svgEl;
+        return seg;
       }).join("");
 
-      const legend = entries.map(([tier, val]) => {
-        const meta = TIER_META[tier] || TIER_META["Unknown"];
+      const legend = tiersOrder.map(tier => {
+        const cfg = TIER_CONFIG[tier];
+        const val = counts[tier] || 0;
         const pct = ((val / total) * 100).toFixed(0);
+        const isActive = state.selectedTier === tier;
         return `
-          <button type="button" class="legend-item" data-filter-tier="${escapeHtml(tier)}" title="Filter by ${escapeHtml(tier)}">
-            <span class="legend-left">
-              <span class="legend-title-row">
-                <span class="swatch" style="background:${meta.hex}" aria-hidden="true"></span>
-                <span>${escapeHtml(tier)}</span>
+          <button type="button" class="tier-card-btn ${isActive ? 'active' : ''}" data-tier-filter="${tier}">
+            <div class="tier-card-left">
+              <span class="tier-card-title">
+                <span style="width:8px;height:8px;border-radius:50%;background:${cfg.hex}"></span>
+                ${escapeHtml(cfg.label)}
               </span>
-              <span class="legend-meta">${escapeHtml(meta.note)}</span>
-            </span>
-            <span class="bar-count">${val} (${pct}%)</span>
+              <span class="tier-card-desc">${cfg.note}</span>
+            </div>
+            <strong style="font-family:var(--font-mono);font-size:0.875rem">${val} <span style="font-size:0.75rem;font-weight:400;color:var(--fg-muted)">(${pct}%)</span></strong>
           </button>
         `;
       }).join("");
 
       container.innerHTML = `
-        <div class="donut-wrap">
-          <svg width="168" height="168" viewBox="0 0 168 168" role="img" aria-label="Routing share across Regex, BERT, and LLM">
-            <circle cx="84" cy="84" r="${radius}" fill="none" stroke="rgba(148,163,184,0.12)" stroke-width="20" />
-            <g transform="rotate(-90 84 84)">${segments}</g>
-            <text x="84" y="80" text-anchor="middle" fill="#F8FAFC" font-size="24" font-weight="700" font-family="Fira Sans, sans-serif">${total}</text>
-            <text x="84" y="99" text-anchor="middle" fill="#94A3B8" font-size="12" font-family="Fira Sans, sans-serif">total logs</text>
+        <div class="donut-layout">
+          <svg width="160" height="160" viewBox="0 0 160 160" role="img" aria-label="Donut chart showing hybrid architecture routing distribution">
+            <circle cx="80" cy="80" r="${radius}" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="18" />
+            <g transform="rotate(-90 80 80)">${segments}</g>
+            <text x="80" y="76" text-anchor="middle" fill="#F9FAFB" font-size="22" font-weight="700" font-family="Inter, sans-serif">${total}</text>
+            <text x="80" y="94" text-anchor="middle" fill="#9CA3AF" font-size="11" font-family="Inter, sans-serif">100% Routed</text>
           </svg>
-          <div class="legend-list">${legend}</div>
-        </div>
-        <div class="tier-summary-strip">
-          <span><strong style="color:#86EFAC">Regex:</strong> Instant rule match</span>
-          <span><strong style="color:#7DD3FC">BERT:</strong> Local ML fallback</span>
-          <span><strong style="color:#DDD6FE">LLM:</strong> Complex edge cases</span>
+          <div class="donut-legend">${legend}</div>
         </div>
       `;
 
-      container.querySelectorAll("[data-filter-tier]").forEach(btn => {
+      container.querySelectorAll("[data-tier-filter]").forEach(btn => {
         btn.addEventListener("click", () => {
-          const select = document.getElementById("filterTier");
-          select.value = select.value === btn.dataset.filterTier ? "ALL" : btn.dataset.filterTier;
+          const clicked = btn.dataset.tierFilter;
+          state.selectedTier = state.selectedTier === clicked ? null : clicked;
+          document.getElementById("filterTier").value = state.selectedTier || "ALL";
           applyFilters();
         });
       });
@@ -1555,8 +2137,18 @@
     function renderSourceChart() {
       const container = document.getElementById("sourceChart");
       const logs = state.filteredLogs;
+
       if (logs.length === 0) {
-        container.innerHTML = `<div class="empty-state">Application source breakdown will appear once logs are classified.</div>`;
+        container.innerHTML = `
+          <div class="chart-empty">
+            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+              <line x1="8" y1="21" x2="16" y2="21"></line>
+              <line x1="12" y1="17" x2="12" y2="21"></line>
+            </svg>
+            <span class="chart-empty-text">Application and service sources will be profiled once logs are received.</span>
+          </div>
+        `;
         return;
       }
 
@@ -1565,7 +2157,7 @@
         const s = l.source || "Unknown";
         if (!bySource[s]) bySource[s] = { total: 0, alerts: 0, normal: 0 };
         bySource[s].total += 1;
-        if (HIGH_SEVERITY.has(l.target_label)) bySource[s].alerts += 1;
+        if (HIGH_SEVERITY_SET.has(l.target_label)) bySource[s].alerts += 1;
         else bySource[s].normal += 1;
       });
 
@@ -1574,31 +2166,31 @@
 
       container.innerHTML = `
         <div class="bar-list">
-          ${entries.map(([src, stats]) => {
-            const alertW = (stats.alerts / maxVal) * 100;
-            const normW = (stats.normal / maxVal) * 100;
+          ${entries.map(([src, s]) => {
+            const alertPct = (s.alerts / maxVal) * 100;
+            const normPct = (s.normal / maxVal) * 100;
             return `
-              <button type="button" class="bar-row" data-filter-source="${escapeHtml(src)}" title="${escapeHtml(src)}: ${stats.alerts} alerts/errors, ${stats.normal} normal">
+              <button type="button" class="bar-row" data-src-filter="${escapeHtml(src)}">
                 <span class="bar-label">${escapeHtml(src)}</span>
-                <div class="bar-track" style="display:flex" aria-hidden="true">
-                  <div class="bar-fill" style="width:${alertW}%;background:#EF4444;border-radius:0"></div>
-                  <div class="bar-fill" style="width:${normW}%;background:#38BDF8;border-radius:0"></div>
+                <div class="bar-track" aria-hidden="true">
+                  <div class="bar-fill" style="width:${alertPct}%;background:#EF4444;border-radius:0"></div>
+                  <div class="bar-fill" style="width:${normPct}%;background:#38BDF8;border-radius:0"></div>
                 </div>
-                <span class="bar-count">${stats.total}</span>
+                <span class="bar-count-wrap"><strong>${s.total}</strong></span>
               </button>
             `;
           }).join("")}
         </div>
-        <div style="display:flex;gap:16px;font-size:0.76rem;color:var(--fg-muted);padding-top:4px">
-          <span style="display:inline-flex;align-items:center;gap:6px"><span class="swatch" style="background:#EF4444"></span>Alerts &amp; Errors</span>
-          <span style="display:inline-flex;align-items:center;gap:6px"><span class="swatch" style="background:#38BDF8"></span>Operational / Normal</span>
+        <div style="display:flex;gap:16px;font-size:0.75rem;color:var(--fg-muted);margin-top:8px">
+          <span style="display:inline-flex;align-items:center;gap:6px"><span style="width:8px;height:8px;border-radius:2px;background:#EF4444"></span>Alerts &amp; Errors</span>
+          <span style="display:inline-flex;align-items:center;gap:6px"><span style="width:8px;height:8px;border-radius:2px;background:#38BDF8"></span>Operational / Normal</span>
         </div>
       `;
 
-      container.querySelectorAll("[data-filter-source]").forEach(btn => {
+      container.querySelectorAll("[data-src-filter]").forEach(btn => {
         btn.addEventListener("click", () => {
           const select = document.getElementById("filterSource");
-          select.value = select.value === btn.dataset.filterSource ? "ALL" : btn.dataset.filterSource;
+          select.value = select.value === btn.dataset.srcFilter ? "ALL" : btn.dataset.srcFilter;
           applyFilters();
         });
       });
@@ -1613,7 +2205,15 @@
         .sort((a, b) => a.ts - b.ts);
 
       if (parsed.length < 2) {
-        container.innerHTML = `<div class="empty-state">Logs with 2 or more timestamps will render the event timeline here.</div>`;
+        container.innerHTML = `
+          <div class="chart-empty">
+            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+            <span class="chart-empty-text">Events with timestamps will render a continuous trend timeline here.</span>
+          </div>
+        `;
         return;
       }
 
@@ -1633,17 +2233,12 @@
         let idx = Math.floor((item.ts.getTime() - minT) / step);
         if (idx >= bucketCount) idx = bucketCount - 1;
         buckets[idx].total += 1;
-        if (HIGH_SEVERITY.has(item.target_label)) buckets[idx].alerts += 1;
+        if (HIGH_SEVERITY_SET.has(item.target_label)) buckets[idx].alerts += 1;
       });
 
-      const W = 480;
-      const H = 175;
-      const padL = 28;
-      const padR = 14;
-      const padT = 16;
-      const padB = 28;
-      const plotW = W - padL - padR;
-      const plotH = H - padT - padB;
+      const W = 500, H = 175;
+      const padL = 28, padR = 14, padT = 16, padB = 28;
+      const plotW = W - padL - padR, plotH = H - padT - padB;
       const maxY = Math.max(...buckets.map(b => b.total), 1);
 
       const xFor = i => padL + (i / (buckets.length - 1)) * plotW;
@@ -1655,57 +2250,50 @@
 
       const timeFmt = new Intl.DateTimeFormat(undefined, { hour: "2-digit", minute: "2-digit" });
       const labels = [0, Math.floor((buckets.length - 1) / 2), buckets.length - 1].map(idx => {
-        return `<text x="${xFor(idx).toFixed(1)}" y="${H - 6}" text-anchor="middle" fill="#94A3B8" font-size="10" font-family="Fira Code, monospace">${timeFmt.format(buckets[idx].t)}</text>`;
+        return `<text x="${xFor(idx).toFixed(1)}" y="${H - 6}" text-anchor="middle" fill="#9CA3AF" font-size="10" font-family="Fira Code, monospace">${timeFmt.format(buckets[idx].t)}</text>`;
       }).join("");
-
-      const gridLines = [0, 0.5, 1].map(ratio => {
-        const y = padT + plotH - ratio * plotH;
-        const val = Math.round(ratio * maxY);
-        return `
-          <line x1="${padL}" y1="${y.toFixed(1)}" x2="${W - padR}" y2="${y.toFixed(1)}" stroke="rgba(148,163,184,0.14)" stroke-dasharray="3 3" />
-          <text x="${padL - 6}" y="${(y + 3).toFixed(1)}" text-anchor="end" fill="#94A3B8" font-size="10" font-family="Fira Code, monospace">${val}</text>
-        `;
-      }).join("");
-
-      const dots = buckets.map((b, i) => `
-        <circle cx="${xFor(i).toFixed(1)}" cy="${yFor(b.total).toFixed(1)}" r="3.5" fill="#38BDF8">
-          <title>${timeFmt.format(b.t)}: ${b.total} total (${b.alerts} alerts/errors)</title>
-        </circle>
-        <circle cx="${xFor(i).toFixed(1)}" cy="${yFor(b.alerts).toFixed(1)}" r="3.5" fill="#EF4444">
-          <title>${timeFmt.format(b.t)}: ${b.alerts} alerts/errors</title>
-        </circle>
-      `).join("");
 
       container.innerHTML = `
-        <svg class="timeline-svg" viewBox="0 0 ${W} ${H}" role="img" aria-label="Log volume and alert spikes over time">
-          ${gridLines}
-          <polygon points="${areaPts}" fill="rgba(56, 189, 248, 0.14)" />
-          <polyline fill="none" stroke="#38BDF8" stroke-width="2.2" points="${totalPts}" />
-          <polyline fill="none" stroke="#EF4444" stroke-width="2" stroke-dasharray="5 3" points="${alertPts}" />
-          ${dots}
+        <svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto;display:block" role="img" aria-label="Timeline trend chart">
+          <defs>
+            <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#38BDF8" stop-opacity="0.25" />
+              <stop offset="100%" stop-color="#38BDF8" stop-opacity="0.0" />
+            </linearGradient>
+          </defs>
+          <line x1="${padL}" y1="${padT + plotH}" x2="${W - padR}" y2="${padT + plotH}" stroke="rgba(255,255,255,0.08)" />
+          <polygon points="${areaPts}" fill="url(#areaGrad)" />
+          <polyline fill="none" stroke="#38BDF8" stroke-width="2.2" stroke-linecap="round" points="${totalPts}" />
+          <polyline fill="none" stroke="#EF4444" stroke-width="2" stroke-dasharray="4 3" stroke-linecap="round" points="${alertPts}" />
+          ${buckets.map((b, i) => `
+            <circle cx="${xFor(i).toFixed(1)}" cy="${yFor(b.total).toFixed(1)}" r="3.5" fill="#38BDF8">
+              <title>${timeFmt.format(b.t)}: ${b.total} total (${b.alerts} alerts/errors)</title>
+            </circle>
+          `).join("")}
           ${labels}
         </svg>
-        <div style="display:flex;gap:16px;font-size:0.76rem;color:var(--fg-muted)">
-          <span style="display:inline-flex;align-items:center;gap:6px"><span class="swatch" style="background:#38BDF8"></span>All Events</span>
-          <span style="display:inline-flex;align-items:center;gap:6px"><span class="swatch" style="background:#EF4444"></span>Alerts &amp; Errors (Dashed)</span>
+        <div style="display:flex;gap:16px;font-size:0.75rem;color:var(--fg-muted);margin-top:6px">
+          <span style="display:inline-flex;align-items:center;gap:6px"><span style="width:8px;height:8px;border-radius:2px;background:#38BDF8"></span>All Logs Throughput</span>
+          <span style="display:inline-flex;align-items:center;gap:6px"><span style="width:8px;height:8px;border-radius:2px;background:#EF4444"></span>Security &amp; Error Spikes</span>
         </div>
       `;
     }
 
     function renderLogsView() {
       const tbody = document.getElementById("logTableBody");
-      const mobileCards = document.getElementById("mobileCards");
-      const empty = document.getElementById("emptyState");
-      const tableWrap = document.getElementById("desktopTableWrap");
+      const mobileCards = document.getElementById("mobileCardsView");
+      const empty = document.getElementById("tableEmptyState");
+      const emptyText = document.getElementById("tableEmptyText");
+      const tableWrap = document.getElementById("desktopTableContainer");
       const showMoreBtn = document.getElementById("showMoreBtn");
 
       const logs = state.filteredLogs;
       const visible = logs.slice(0, state.visibleLimit);
 
       document.getElementById("explorerCount").textContent = state.allLogs.length === 0
-        ? "No logs loaded yet"
-        : `Showing ${visible.length} of ${logs.length} matching logs`;
-      document.getElementById("paginationInfo").textContent =
+        ? "Awaiting real log data"
+        : `Showing ${visible.length} of ${logs.length} matching events`;
+      document.getElementById("paginationCount").textContent =
         `${visible.length} / ${logs.length} logs displayed`;
 
       if (logs.length === 0) {
@@ -1714,9 +2302,9 @@
         tableWrap.style.display = "none";
         mobileCards.style.display = "none";
         empty.hidden = false;
-        empty.innerHTML = state.allLogs.length === 0
-          ? "No logs classified yet. Upload a real <strong>.csv</strong>, <strong>.log</strong>, or <strong>.txt</strong> file—or classify a log line above—to begin."
-          : "No logs match your current filters. Click <strong>Reset</strong> to view all logs.";
+        emptyText.innerHTML = state.allLogs.length === 0
+          ? "No logs loaded yet. Click <strong>Load Demo Data</strong> above, or upload a real log file to begin."
+          : "No logs match your current search filters. Click <strong>Reset</strong> to view all.";
         showMoreBtn.hidden = true;
         return;
       }
@@ -1725,34 +2313,82 @@
       tableWrap.style.display = "";
       mobileCards.style.display = "";
 
-      tbody.innerHTML = visible.map(row => `
-        <tr>
-          <td class="ts-cell">${escapeHtml(row.timestamp || "—")}</td>
+      tbody.innerHTML = visible.map((row, idx) => `
+        <tr data-log-index="${idx}">
+          <td class="time-cell">${escapeHtml(row.timestamp || "—")}</td>
           <td><strong>${escapeHtml(row.source || "—")}</strong></td>
           <td>${categoryBadge(row.target_label)}</td>
           <td>${tierBadge(row.classification_tier)}</td>
-          <td class="mono-cell">${escapeHtml(row.log_message || "")}</td>
+          <td class="msg-cell">${escapeHtml(row.log_message || "")}</td>
+          <td class="action-cell">
+            <button type="button" class="btn-icon" data-inspect-idx="${idx}" title="Inspect full log details">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </button>
+          </td>
         </tr>
       `).join("");
 
-      mobileCards.innerHTML = visible.map(row => `
-        <article class="log-card">
-          <div class="log-card-top">
-            <span class="log-card-source">${escapeHtml(row.source || "Unknown")}</span>
-            <span class="ts-cell">${escapeHtml(row.timestamp || "—")}</span>
+      mobileCards.innerHTML = visible.map((row, idx) => `
+        <article class="mobile-card" data-log-index="${idx}">
+          <div class="mobile-card-top">
+            <strong>${escapeHtml(row.source || "Unknown")}</strong>
+            <span class="time-cell">${escapeHtml(row.timestamp || "—")}</span>
           </div>
-          <p class="log-card-msg">${escapeHtml(row.log_message || "")}</p>
-          <div class="log-card-badges">
-            ${categoryBadge(row.target_label)}
-            ${tierBadge(row.classification_tier)}
+          <p class="mobile-card-msg">${escapeHtml(row.log_message || "")}</p>
+          <div class="mobile-card-bottom">
+            <div style="display:flex;gap:6px;flex-wrap:wrap">
+              ${categoryBadge(row.target_label)}
+              ${tierBadge(row.classification_tier)}
+            </div>
+            <button class="btn btn-sm" data-inspect-idx="${idx}" type="button">Inspect</button>
           </div>
         </article>
       `).join("");
 
+      // Bind inspect clicks
+      document.querySelectorAll("[data-inspect-idx]").forEach(btn => {
+        btn.addEventListener("click", () => openInspector(visible[btn.dataset.inspectIdx]));
+      });
+
       showMoreBtn.hidden = visible.length >= logs.length;
     }
 
-    // Event: Single Log Form
+    function openInspector(log) {
+      if (!log) return;
+      document.getElementById("modalRawMessage").textContent = log.log_message || "";
+      document.getElementById("modalCategoryBadge").innerHTML = categoryBadge(log.target_label);
+      document.getElementById("modalTierBadge").innerHTML = tierBadge(log.classification_tier);
+      document.getElementById("modalSource").textContent = log.source || "Unknown";
+      document.getElementById("modalTimestamp").textContent = log.timestamp || "—";
+
+      const cfg = TIER_CONFIG[log.classification_tier] || TIER_CONFIG["Unknown"];
+      document.getElementById("modalRationale").innerHTML = `
+        <p><strong>${escapeHtml(cfg.label)}:</strong> ${escapeHtml(cfg.desc)}</p>
+        <p style="margin-top:6px;font-size:0.75rem;color:var(--fg-muted)">Inference Cost Benchmark: ${escapeHtml(cfg.note)}</p>
+      `;
+
+      document.getElementById("inspectorModal").hidden = false;
+    }
+
+    document.getElementById("closeModalBtn").addEventListener("click", () => {
+      document.getElementById("inspectorModal").hidden = true;
+    });
+
+    document.getElementById("inspectorModal").addEventListener("click", e => {
+      if (e.target === document.getElementById("inspectorModal")) {
+        document.getElementById("inspectorModal").hidden = true;
+      }
+    });
+
+    document.getElementById("modalCopyBtn").addEventListener("click", () => {
+      const txt = document.getElementById("modalRawMessage").textContent;
+      navigator.clipboard.writeText(txt).then(() => showToast("Log message copied to clipboard!"));
+    });
+
+    // Single Form Submit
     document.getElementById("singleLogForm").addEventListener("submit", async e => {
       e.preventDefault();
       const btn = document.getElementById("singleSubmitBtn");
@@ -1764,7 +2400,7 @@
       if (!log_message) return;
 
       btn.disabled = true;
-      btn.textContent = "Classifying…";
+      btn.innerHTML = `<span style="display:inline-block;animation:spin 1s linear infinite">⏳</span> Classifying with 3-Tier Router…`;
 
       try {
         const res = await fetch("/classify-log/", {
@@ -1772,55 +2408,73 @@
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ source, log_message, add_to_session }),
         });
-        if (!res.ok) throw new Error("Classification failed");
+        if (!res.ok) throw new Error("Classification API error");
         const data = await res.json();
-        const latencyText = data.latency_ms != null ? `${data.latency_ms} ms` : "";
 
         banner.hidden = false;
         banner.innerHTML = `
-          <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px">
-            ${categoryBadge(data.target_label)}
-            ${tierBadge(data.classification_tier)}
+          <div class="result-banner-top">
+            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+              ${categoryBadge(data.target_label)}
+              ${tierBadge(data.classification_tier)}
+            </div>
+            <span class="time-cell">⚡ ${data.latency_ms ?? 0} ms</span>
           </div>
-          <span class="ts-cell">${escapeHtml(latencyText)}</span>
+          <div class="result-meta-row">
+            <span><strong>Engine:</strong> ${escapeHtml(data.classification_tier)}</span>
+            <span><strong>Source:</strong> ${escapeHtml(data.source)}</span>
+            <span><strong>Tokens Billed:</strong> ${data.classification_tier === "LLM" ? "~140 tokens" : "0 (Local $0.00)"}</span>
+          </div>
         `;
 
         if (add_to_session && Array.isArray(data.logs)) {
           setLogs(data.logs);
+          showToast(`Classified as ${data.target_label} via ${data.classification_tier}`);
         }
       } catch {
         banner.hidden = false;
-        banner.innerHTML = `<span style="color:#FCA5A5">Error: Could not classify log. Check API status.</span>`;
+        banner.innerHTML = `<span style="color:#FCA5A5">Error contacting classification endpoint.</span>`;
+        showToast("Classification failed", false);
       } finally {
         btn.disabled = false;
-        btn.textContent = "Classify Log Message";
+        btn.innerHTML = `
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+          </svg>
+          Classify Log Message
+        `;
       }
     });
 
-    // Event: File Drop & Selection
+    // Preset Chips
+    document.querySelectorAll(".preset-chip").forEach(chip => {
+      chip.addEventListener("click", () => {
+        document.getElementById("singleSource").value = chip.dataset.src;
+        document.getElementById("singleMessage").value = chip.dataset.msg;
+        document.getElementById("singleMessage").focus();
+      });
+    });
+
+    // File Upload & Dropzone
     const dropzone = document.getElementById("dropzone");
     const fileInput = document.getElementById("csvFileInput");
     const uploadBtn = document.getElementById("uploadCsvBtn");
 
-    function updateSelectedFile(file) {
-      state.selectedFile = file || null;
-      if (file) {
-        document.getElementById("dropzoneTitle").textContent = file.name;
-        document.getElementById("dropzoneSub").textContent = `${(file.size / 1024).toFixed(1)} KB ready to classify`;
-        uploadBtn.disabled = false;
-      }
+    function handleFile(file) {
+      if (!file) return;
+      state.selectedFile = file;
+      document.getElementById("dropzoneTitle").innerHTML = `<span class="dropzone-file-selected">📄 ${escapeHtml(file.name)}</span>`;
+      document.getElementById("dropzoneSub").textContent = `${(file.size / 1024).toFixed(1)} KB ready for hybrid classification`;
+      uploadBtn.disabled = false;
     }
 
-    fileInput.addEventListener("change", () => updateSelectedFile(fileInput.files[0]));
-    dropzone.addEventListener("dragover", e => {
-      e.preventDefault();
-      dropzone.classList.add("dragover");
-    });
+    fileInput.addEventListener("change", () => handleFile(fileInput.files[0]));
+    dropzone.addEventListener("dragover", e => { e.preventDefault(); dropzone.classList.add("dragover"); });
     dropzone.addEventListener("dragleave", () => dropzone.classList.remove("dragover"));
     dropzone.addEventListener("drop", e => {
       e.preventDefault();
       dropzone.classList.remove("dragover");
-      if (e.dataTransfer.files.length) updateSelectedFile(e.dataTransfer.files[0]);
+      if (e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]);
     });
 
     uploadBtn.addEventListener("click", async () => {
@@ -1828,7 +2482,7 @@
       const statusBox = document.getElementById("uploadStatus");
       const defaultSource = document.getElementById("defaultUploadSource").value.trim() || "ProductionServer";
       uploadBtn.disabled = true;
-      uploadBtn.textContent = "Classifying File…";
+      uploadBtn.innerHTML = `⏳ Batch Classifying File…`;
 
       try {
         const form = new FormData();
@@ -1836,44 +2490,65 @@
         form.append("default_source", defaultSource);
         const res = await fetch("/api/classify-csv", { method: "POST", body: form });
         const data = await res.json();
-        if (!res.ok) throw new Error(data.detail || "Upload failed");
+        if (!res.ok) throw new Error(data.detail || "Upload error");
 
         setLogs(data.logs || []);
         statusBox.hidden = false;
-        statusBox.innerHTML = `<span style="color:#86EFAC">Classified ${data.logs.length} logs from ${escapeHtml(state.selectedFile.name)}</span>`;
+        statusBox.innerHTML = `<span style="color:#6EE7B7">✓ Successfully classified ${data.logs.length} logs from ${escapeHtml(state.selectedFile.name)}</span>`;
+        showToast(`Classified ${data.logs.length} logs from file!`);
       } catch (err) {
         statusBox.hidden = false;
-        statusBox.innerHTML = `<span style="color:#FCA5A5">${escapeHtml(err.message)}</span>`;
+        statusBox.innerHTML = `<span style="color:#FCA5A5">Error: ${escapeHtml(err.message)}</span>`;
+        showToast("Upload failed", false);
       } finally {
         uploadBtn.disabled = false;
         uploadBtn.textContent = "Classify Uploaded File";
       }
     });
 
-    // Event: Clear Session Data
-    document.getElementById("clearLogsBtn").addEventListener("click", async () => {
+    // Quick Load Demo Data
+    async function loadDemoData() {
       try {
-        await fetch("/api/clear", { method: "POST" });
-      } finally {
-        document.getElementById("singleResult").hidden = true;
-        document.getElementById("uploadStatus").hidden = true;
-        setLogs([]);
+        const res = await fetch("/api/load-sample", { method: "POST" });
+        if (!res.ok) throw new Error();
+        const data = await res.json();
+        setLogs(data.logs || []);
+        showToast("Loaded 18 real-world demonstration logs!");
+      } catch {
+        showToast("Failed to load demo data", false);
       }
+    }
+
+    document.getElementById("loadSampleNavBtn").addEventListener("click", loadDemoData);
+    document.getElementById("emptyStateDemoBtn").addEventListener("click", loadDemoData);
+
+    // Clear Data
+    document.getElementById("clearLogsBtn").addEventListener("click", async () => {
+      await fetch("/api/clear", { method: "POST" });
+      document.getElementById("singleResult").hidden = true;
+      document.getElementById("uploadStatus").hidden = true;
+      setLogs([]);
+      showToast("Session cleared");
     });
 
-    // Event: Filters
+    // Triage Tabs
+    document.querySelectorAll(".tab-btn").forEach(tab => {
+      tab.addEventListener("click", () => {
+        document.querySelectorAll(".tab-btn").forEach(t => {
+          t.classList.remove("active");
+          t.setAttribute("aria-selected", "false");
+        });
+        tab.classList.add("active");
+        tab.setAttribute("aria-selected", "true");
+        state.activeTab = tab.dataset.tab;
+        applyFilters();
+      });
+    });
+
+    // Filters & Search
     ["searchInput", "filterSource", "filterLabel", "filterTier"].forEach(id => {
       document.getElementById(id).addEventListener("input", applyFilters);
       document.getElementById(id).addEventListener("change", applyFilters);
-    });
-
-    document.getElementById("alertsOnlyBtn").addEventListener("click", function () {
-      state.alertsOnly = !state.alertsOnly;
-      this.setAttribute("aria-pressed", String(state.alertsOnly));
-      this.style.borderColor = state.alertsOnly ? "#EF4444" : "";
-      this.style.background = state.alertsOnly ? "rgba(239, 68, 68, 0.16)" : "";
-      this.style.color = state.alertsOnly ? "#FCA5A5" : "";
-      applyFilters();
     });
 
     document.getElementById("resetFiltersBtn").addEventListener("click", () => {
@@ -1881,12 +2556,16 @@
       document.getElementById("filterSource").value = "ALL";
       document.getElementById("filterLabel").value = "ALL";
       document.getElementById("filterTier").value = "ALL";
-      state.alertsOnly = false;
-      const alertBtn = document.getElementById("alertsOnlyBtn");
-      alertBtn.setAttribute("aria-pressed", "false");
-      alertBtn.removeAttribute("style");
+      state.selectedCategory = null;
+      state.selectedTier = null;
+      state.activeTab = "all";
+      document.querySelectorAll(".tab-btn").forEach((t, i) => {
+        t.classList.toggle("active", i === 0);
+        t.setAttribute("aria-selected", String(i === 0));
+      });
       state.visibleLimit = 25;
       applyFilters();
+      showToast("Filters reset to default");
     });
 
     document.getElementById("showMoreBtn").addEventListener("click", () => {
@@ -1894,26 +2573,27 @@
       renderLogsView();
     });
 
-    // Event: Export CSV
+    // Export CSV
     document.getElementById("exportCsvBtn").addEventListener("click", () => {
       if (!state.filteredLogs.length) return;
-      const cols = Object.keys(state.filteredLogs[0]);
+      const cols = ["timestamp", "source", "target_label", "classification_tier", "log_message"];
       const escapeCsv = val => `"${String(val ?? "").replace(/"/g, '""')}"`;
-      const csvRows = [
+      const rows = [
         cols.join(","),
-        ...state.filteredLogs.map(row => cols.map(c => escapeCsv(row[c])).join(",")),
+        ...state.filteredLogs.map(r => cols.map(c => escapeCsv(r[c])).join(",")),
       ].join("\n");
 
-      const blob = new Blob([csvRows], { type: "text/csv;charset=utf-8;" });
+      const blob = new Blob([rows], { type: "text/csv;charset=utf-8;" });
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = "classified_logs.csv";
+      a.download = `classified_logs_${Date.now()}.csv`;
       a.click();
       URL.revokeObjectURL(url);
+      showToast("Downloaded classified_logs.csv");
     });
 
-    // Initialize empty / real session state
+    // Init
     checkApiHealth();
     fetchSessionLogs();
   </script>

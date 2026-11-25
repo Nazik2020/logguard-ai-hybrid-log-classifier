@@ -119,6 +119,24 @@ def clear_session_logs():
     return {"logs": []}
 
 
+@app.post("/api/load-sample")
+def load_sample_dataset():
+    """Quick-load the 18 sample real-world logs for instant demoing and analysis."""
+    sample_path = CURRENT_DIR / "resources" / "sample_upload.csv"
+    if not sample_path.exists():
+        sample_path = CURRENT_DIR / "resources" / "test.csv"
+    if not sample_path.exists():
+        raise HTTPException(status_code=404, detail="Sample dataset not found.")
+
+    df = pd.read_csv(sample_path)
+    df_classified = _classify_dataframe(df, default_source="ProductionServer")
+    records = df_classified.fillna("").to_dict(orient="records")
+    SESSION_LOGS.clear()
+    SESSION_LOGS.extend(records)
+    return {"logs": SESSION_LOGS, "count": len(SESSION_LOGS)}
+
+
+
 @app.post("/api/classify-csv")
 async def classify_file_json(file: UploadFile, default_source: str = Form("Application")):
     """Upload a real .csv, .log, or .txt file and return classified rows as JSON."""
